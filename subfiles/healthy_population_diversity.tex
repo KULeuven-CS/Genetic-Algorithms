@@ -22,4 +22,26 @@ scores faster than other GAs. Analysis of the adaptive operators illustrates tha
 synergy of the operators working together to achieve an effective balance between exploration and exploitation.
 \end{abstract}
 
+Premature population convergence about a local optimum is a common problem. It is usually caused by one of the following reasons.
+
+\begin{enumerate}
+	\item \textbf{Incorrect application of selection pressure:} Whereby a ``super-performer'' in the population
+	dominates the selection procedure and eliminates much of the population's diversity.
+	\item \textbf{Too low mutation rate:} diversity is lost trough selection and not recovered via mutation.
+	\item \texfbf{Loss of crossover efficacy:} As a population becomes more converged, recombination of similar individuals causes similar offspring (inbreeding).
+\end{enumerate}
+
+This papers presents \textbf{ACROMUSE} which adapts the crossover, mutation and selection parameters. The main goal is maintaining a diverse population of healthy individuals. It employs two measures to of population diversity.
+
+\begin{itemize}
+	\item \textbf{Standard Population Diversity (SPD)} \\
+	This measure describes the population's solution space diversity. The SPD measure is used to control mutation and crossover. Crossover employs SPD to divide the population into an \textbf{exploration section} and an \textbf{exploitation section}. The sizes of these sections are controlled by the SPD measure.
+	\item \textbf{Healty Population Diversity (HPD)} \\
+	This measure describes a population’s solution space diversity from a fitness perspective, i.e., a measure of the
+	diversity of healthy individuals. HPD is used to regulate selection pressure. Tournament size is reduced when HPD is low permitting lower-fitness individuals to reproduce.
+\end{itemize}
+
+Maintaining a diverse population is very important for GA search. Not only does high-genetic diversity increase the
+population's search coverage but it also endows the population with a degree of robustness in case of environmental change.
+
 \end{document}
