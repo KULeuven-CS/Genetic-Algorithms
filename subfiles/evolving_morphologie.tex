@@ -1,0 +1,169 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\begin{mdframed}
+\fullcite{Sims:1994:EMB:1667943.1667946}
+\end{mdframed}
+
+\begin{abstract}
+This article describes a system for the evolution and co-evolution of virtual creatures that compete in physically
+simulated three-dimensional worlds. Pairs of individuals enter one-on-one contests in which they contend to gain
+control of a common resource. The winners receive higher relative fitness scores allowing them to survive and
+reproduce. Realistic dynamics simulation including gravity, collisions, and friction, restricts the actions to
+physically plausible behaviors.
+
+The morphology of these creatures and the neural systems for controlling their muscle forces are both genetically
+determined, and the morphology and behavior can adapt to each other as they evolve simultaneously. The genotypes are
+structured as directed graphs of nodes and connections, and they can efficiently but flexibly describe instructions for
+the development of creatures' bodies and control systems with repeating or recursive components. When simulated
+evolutions are performed with populations of competing creatures, interesting and diverse strategies and counter-
+strategies emerge.
+
+\end{abstract}
+
+\subsection{Introduction}
+
+Interactions between evolving organisms are generally believed to have a strong influence on their resulting complexity
+and diversity. The difference between evolution and optimization is the lack of an explicit goal. The hope is that
+virtual creatures with higher complexity and more interesting behavior will evolve than when applying the selection
+pressures of optimization alone.
+
+\subsection{The Contest}
+
+Creatures compete to gain control of a single cube, placed in the center of the world. Creates start rotated away from
+the cube and under a diagonal plane. This prevent large creates from simply falling over the cube. The fitness is
+determined by the distance from the cube. Additionally, keeping the opponent further away from the cube increases one's
+fitness. Finally, control over the cube is awarded: if both creatures end up contacting the cube, the winner is the one
+that surrounds it the most.
+
+\subsection{Approximating Competitive Environments}
+
+Pairs of individuals compete one-on-one. At every generation of a simulated evolution the individuals in the population
+are paired up by some pattern and a number of competitions are performed to eventually determine a fitness value for
+every individual.
+
+\begin{itemize}
+	\item \textbf{Extreme 1} \\
+	Each individual competes with all the others. The fitness is determined by the average score.
+	\item \textbf{Extreme 2} \\
+	Each individual competes with just a single opponent. This can cause inconsistency in the fitness because it is
+	highly dependent on the assigned opponent.
+	\item \textbf{Compromise 1} \\
+	Each individual competes again server opponents chosen at random.
+	\item \textbf{Compromise 2} \\
+	A single overall winner can be obtained using a tournament pattern. The disadvantage are the unfair scores caused
+	by the initial assignment of opponents.
+	\item \textbf{Compromise 3} \\
+	Each individual competes once per generation, but all against the same opponent. The one-to-beat is the one with
+	the highest fitness from the previous generation.
+\end{itemize}
+
+The resulting effects of using these different competition patterns is unfortunately difficult to quantify.
+
+\subsection{Creature Morphology}
+
+In this work, the phenotype embodiment of a virtual creature is a hierarchy of articulated three-dimensional rigid
+parts. The genetic representation of this morphology is a directed graph of nodes and connections.
+
+\begin{itemize}
+	\item \textbf{Dimension:} physical shape of the part.
+	\item \textbf{Join-type:}  the constraints on the relative motion between this part and its parent. The options
+	are: \emph{rigid, revolute, twist, universal, bendtwist, twist-bend, or spherical}.
+	\item \textbf{Joint-limits:} the point beyond which restoring spring forces will be exerted for each degree of
+	freedom.
+	\item \textbf{Resursive-limit:}  how many times this node should generate a phenotype part when in a recursive
+	cycle.
+	\item \textbf{Neurons:} See section on behavior.
+	\item \textbf{Connections:} connections to other nodes.  The placement of a child part relative to its parent is
+	decomposed into the following properties, allowing them to be mutated independently: \emph{position, orientation,
+	scale,} and \emph{reflection}.
+\end{itemize}
+
+\subsection{Creature Behavior}
+
+A virtual ``brain'' determines the behavior of a creature. it accepts sensor values and provides output effector values. Sensor, effector, and internal neuron signals are represented by continuously variable scalars.
+
+\subsubsection{Sensors}
+A sensor is contained within a specific part and measures either aspects of that part of the work relative to that part.
+
+\begin{enumerate}
+	\item \textbf{Joint angle sensors:} give the current value for each degree of freedom of each joint.
+	\item \textbf{Contact sensors:} activate positively when contact is made and negatively otherwise. There is no distinction between self contact or environmental contact.
+	\item \textbf{Photosensors:}  react to a global light source position. Photosensors for two independent colors are
+	made available, for the light located in the cube and the light located at the center of mass of the opponent.
+\end{enumerate}
+
+\subsubsection{Neurons}
+
+Neurons allow creatures internal state beyond its sensor values. Neural nodes can perform functions on the input to
+genere output signals. The set of functions that neural nodes can have is: \emph{ sum, product, divide, sum-threshold,
+greater-than, sign-of, min, max, abs, if, interpolate, sin, cos, atan, log, expt, sigmoid, integrate, differentiate,
+smooth, memory, oscillatewave,} and \emph{oscillate-saw}.
+
+\subsubsection{Effectors}
+Each effector simply contains a connection from a neuron or a sensor from which to receive a value. It
+controls a degree of freedom of a joint. Additionally, each one is given a maximum-strength proportional to the maximum
+cross sectional area of the two parts it joins.
+
+\subsubsection{Combining Morphology and Control}
+
+Because most of the neural elements exist within a specif part of the creature, the genotype for the nervous system is
+a nested graph: the morphological nodes each contain graphs of the neural nodes and connections. The nodes contain the
+sensors, neurons, and effectors, and the connections define the flow of signals between these nodes.
+
+Creatures are also allowed a set of neurons that are not associated with a specific part, and are copied only once into
+the phenotype. This gives the opportunity for the development of global synchronization or centralized control.
+
+\subsection{Physical Simulation}
+Dynamics simulation is used to calculate the movement of creatures resulting from their interaction with a virtual 3D
+world. The shapes of parts are represented here by simple rectangular solids.  Bounding box hierarchies are used to
+reduce the number of collision tests between parts. Collision response is accomplished by a hybrid model using both
+impulses and penalty spring forces.
+
+\subsection{Creature Evolution}
+
+An evolution of virtual creatures is begun by creating an initial population of genotypes. These initial creatures are
+either generated from scratch or are an existing genotype from a previous evolution.  Inappropriate creatures are
+removed from the population. A survival-ratio determines the percentage of the population that will survive each
+generation. Creatures are grown from their genotypes, and their fitness values are measured by simulating one or more
+competitions with other individuals. Offspring are generated from the surviving creatures by copying and combining
+their directed graph genotypes.
+
+\subsubsection{Mutating Directed Graphs}
+
+\begin{enumerate}
+	\item The internal parameters of each node are subjected to possible alterations.
+	\item A new random node is added to the graph.
+	\item The parameters of each connection are subjected to possible mutations.
+	\item New random connections may be added and existing ones may be removed.
+	\item Unconnected elements are garbage collected.
+\end{enumerate}
+
+\subsubsection{Mating Directed Graphs}
+
+Sexual reproduction allows components from more than one parent to be combined into new offspring.
+
+\begin{itemize}
+	\item \textbf{Crossover:} The nodes of two parents are each aligned in a row as they are stored, and the nodes of the first parent are copied to make the child, but one or more crossover points determine when the copying source should switch to the other parent.
+	\item \textbf{Grafting:} A node of one parent is connected to a node of another.  The first parent is copied, and one of its connections is chosen at random and adjusted to point to a random node in the second parent.
+	\item \textbf{Asexual:} Here a child is created only by mutation.
+\end{itemize}
+
+\subsection{Results and Discussion}
+
+A variety of methods for reaching the cube were discovered. Some extended arms out onto the cube, and some reached out
+while falling forward to land on top of it. Others could crawl inch-worm style or roll towards the cube, and a few even
+developed leg-like appendages that they used to walk towards it. The most interesting results often occurred when both
+species discovered methods for reaching the cube and then further evolved strategies to counter the opponent's
+behavior. Most creatures perform similar behavior independently of the opponent's actions, but a few are adaptive in
+that they can reach towards the cube wherever it moves.
+
+\subsection{Conclusion}
+
+In summary, a system has been described that can automatically generate autonomous three-dimensional virtual creatures
+that exhibit diverse competitive strategies in physically simulated worlds. A genetic language that uses directed
+graphs to describe both morphology and behavior defines an unlimited hyperspace of possible results, and a variety of
+interesting virtual creatures have been shown to emerge when this hyperspace is explored by populations of evolving and
+competing individuals.
+\end{document}

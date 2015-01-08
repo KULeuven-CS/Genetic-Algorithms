@@ -1,0 +1,126 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\begin{mdframed}
+\fullcite{Michalewicz:1996:GAD:229930}
+\end{mdframed}
+
+There are 3 constraint-handling techniques considered in this chapter.
+
+\begin{enumerate}
+	\item \textbf{Penalty:} Generate solutions without considering constraints but decrease their ``goodness'' in the
+	evaluation function. The problem is converted to an unconstrained problem with a penalty function. The penalty can
+	either be constant or in function of the violation. The extreme is eliminating non-feasible solution with a death-
+	penalty.
+	\item \textbf{Repair:} Correct the infeasible solutions. However, they might be computationally intensive and
+	require to be tailored to the application.
+	\item \textbf{Decoder:} Use a special representation mapping (decoder) which guarantees the generation of a
+	feasible solution. Alternatively use problem-specific operations. Frequently, this might not be feasible for all
+	constraints and is rather computationally intensive.
+\end{enumerate}
+
+\subsection{The 0/1 Knapsack Problem}
+
+The knapsack problem is used to evaluate the 3 techniques. The problem consists of a capacity limited bag, and items
+with weights and profits. The goal is to maximize the profit under the constraint that the sum of weights cannot exceed
+the capacity of the sack.
+
+\subsection{The Test Data}
+
+The difficulty of the problem is greatly affected by the correlation between profits and weights. We consider 3 cases.
+
+\begin{enumerate}
+	\item \textbf{Uncorrelated:} Both the weight and profit are distributed uniformly random ($[1 \mathellipsis v]$).
+	\item \textbf{Weakly correlated:} The weight is distributed uniformly random. Profits are associated with weights
+	by a random factor ($[1 \mathellipsis r]$).
+	\item \textbf{Strongly correlated:} The weight is distributed uniformly random. Profits are associated with weight
+	by a fixed factor ($r$).
+\end{enumerate}
+
+Higher correlations implies a smaller value of the difference:
+
+\begin{equation}
+\text{max}_{i=1 \mathellipsis n} { P[i]/W[i]} - \text{mim}_{i=1 \mathellipsis n} { P[i]/W[i]}
+\end{equation}
+
+Higher correlation problems have higher expected difficulty. Two knapsacks are considered:
+
+\begin{itemize}
+	\item \textbf{Restrictive Knapsack Capacity:} Here $C_1 = 2v$. The optimal solution contains very few items.
+	\item \textbf{Average Knapsack Capacity:} Here $C_2 = \frac{1}{2} \sum^n_{i=1}W[i]$. About half the items are in
+	the optimal solution.
+\end{itemize}
+
+\subsection{Algorithms}
+
+\subsubsection{Penalty Algorithms}
+
+The solution is represented by a binary string of length $n$: the $i$-th item is selected for the knapsack when $x[i] =
+1$. The fitness is given by
+\begin{equation}
+\text{eval}(x) = \sum^n_{i=1} x[i] \cdot P[i] - \text{Pen}(x)
+\end{equation}
+Three different strategies for assigning penalties are considered. In all cases $\rho = \text{max}_{i=1 \mathellipsis
+n} { P[i]/W[i]}$.
+
+\begin{itemize}
+	\item \textbf{Logarithmic} \\
+	\[
+	A_p[1]: \text{Pen}(x) = log_2(1 + \rho \cdot (\sum^n_{i=1} x[i] \cdot P[i] - C))
+	\]
+	\item \textbf{Linear}
+	\[
+	A_p[2]: \text{Pen}(x) = \rho \cdot (\sum^n_{i=1} x[i] \cdot P[i] - C)
+	\]
+	\item \textbf{Quadratic}
+	\[
+	A_p[1]: \text{Pen}(x) = (\rho \cdot (\sum^n_{i=1} x[i] \cdot P[i] - C))^2
+	\]
+\end{itemize}
+
+
+\subsubsection{Repair Algorithms}
+
+The same representation is used as in the previous section. The evaluation function is very similar but lack the
+penalty function.
+
+\begin{equation}
+\text{eval}(x) = \sum^n_{i=1} x[i] \cdot P[i] - \text{Pen}(x)
+\end{equation}
+
+Two repair algorithms are considered that only differ in the selection procedure.
+
+\begin{itemize}
+	\item \textbf{Random Repair} $A_r[1]$: A random item is removed from the knapsack until it is no longer overfilled.
+	\item \textbf{Greedy Repair} $A_r[2]$: All items in the knapsack are sorted in decreasing order of profit-to-weight
+	ratio. The last items are removed from the knapsack until it is no longer overfilled.
+\end{itemize}
+
+\subsubsection{Decoder Algorithms}
+
+The ordinal representation is used for representing chromosomes. The $i$-th element is always in the rande of $[1
+\mathellipsis n - i + 1]$. The one-point crossover operator applied to any valid chromosome will generate a valid
+solution. Two build procedures are considered:
+
+\begin{itemize}
+	\item \textbf{Random Decoding} $A_d[1]$: The representation is created such that the order of items corresponds
+	with the order in the input.
+	\item \textbf{Greedy Decoding} $A_d[2]$: The representation is created such that the order of items is decreasing
+	in the profit-to-weight ratio.
+\end{itemize}
+
+\subsection{Results}
+
+\begin{itemize}
+	\item Penalty functions $A_p[i]$ do not produce feasible results for problems with restrictive capacity ($C_1$).
+	\item Considering average capacity ($C_2$) problems, the logarithmic penalty function outperforms all others.
+	\item Considering average capacity ($C_2$) problems, the greedy repair method $A_r[2]$ outperforms all other
+	methods.
+\end{itemize}
+
+The results are intuitive: for the restrictive problem, only a small fraction constitute the feasible solution. The
+smaller the ratio between the feasible part and the search space, the harder for the penalty methods to provide
+feasible results.
+
+\end{document}

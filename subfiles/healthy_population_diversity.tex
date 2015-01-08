@@ -1,0 +1,25 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\begin{mdframed}
+\fullcite{6036171}
+\end{mdframed}
+
+\begin{abstract}
+This paper presents ACROMUSE, a novel genetic algorithm (GA) which adapts crossover, mutation, and selection
+parameters. ACROMUSEs objective is to create and maintain a diverse population of highly-fit (healthy) individuals,
+capable of adapting quickly to fitness landscape change and well-suited to the efficient optimization of multimodal
+fitness landscapes. A new methodology is introduced for determining standard population diversity (SPD) and an original
+measure of healthy population diversity (HPD) is proposed. The SPD measure is employed to adapt crossover and mutation,
+while selection pressure is controlled by adapting tournament size according to HPD. In addition to selection pressure
+control, ACROMUSE tournament selection selects individuals according to healthy diversity contribution rather than
+fitness. This proposed selection mechanism simultaneously promotes diversity and fitness within the population. The
+performance of ACROMUSE is evaluated using various multimodal benchmark functions. Statistically significant results
+are presented comparing ACROMUSEs fitness and diversity performance to that of several other GAs. By maintaining a
+diverse population of healthy individuals, ACROMUSE responds to fitness landscape change by restoring better fitness
+scores faster than other GAs. Analysis of the adaptive operators illustrates that the key benefit of ACROMUSE is the
+synergy of the operators working together to achieve an effective balance between exploration and exploitation.
+\end{abstract}
+
+\end{document}

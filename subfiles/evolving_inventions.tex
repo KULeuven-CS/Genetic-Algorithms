@@ -1,0 +1,79 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\begin{mdframed}
+\fullcite{Koza2003}
+\end{mdframed}
+
+\begin{abstract}
+
+Evolution is an immensely powerful creative process. From the intricate biochemistry of individual cells to the
+elaborate structure of the human brain, it has produced wonders of unimaginable complexity. Evolution achieves these
+feats with a few simple processes--mutation, sexual recombination and natural selection--which it iterates for many
+generations. Now computer programmers are harnessing software versions of these same processes to achieve machine
+intelligence. Called genetic programming, this technique has designed computer programs and electronic circuits that
+perform specified functions.
+
+In the field of electronics, genetic programming has duplicated 15 previously patented inventions, including several
+that were hailed as seminal in their respective fields when they were first announced. Six of these 15 existing
+inventions were patented after January 2000 by major research institutions, which indicates that they represent current
+frontiers of research in domains of scientific and practical importance. Some of the automatically produced inventions
+infringe squarely on the exact claims of the previously patented inventions. Others represent new inventions by
+duplicating the functionality of the earlier device in a novel way. One of these inventions is a clear improvement over
+its predecessor.
+
+Genetic programming has also classified protein sequences and produced human competitive results in a variety of areas,
+such as the design of antennas, mathematical algorithms and general-purpose controllers. We have recently filed for a
+patent for a genetically evolved general-purpose controller that is superior to mathematically derived controllers
+commonly used in industry.
+
+\end{abstract}
+
+
+In the field of electronics, GP duplicated existing, patented inventions. Resulting inventions were in some cases very
+similar and in others completely square to current claims in the patent. First practical commercial area for GP is
+design. Usually there are many trade-offs and genetic programming does not require insight in underlying structure.
+
+\subsection{Methodology}
+
+Starting from random generated organism. High level description of their function. Fitness is evaluated by mathematical formula. Operations progressively improve the population.
+
+\begin{itemize}
+	\item \textbf{Crossover} (90\%): search in space of all possible organisms.
+	\item \textbf{Mutation} (1\%): local search for advantage near existing good individuals.
+	\item \textbf{Copying} (9\%): the best individuals, copied unaltered so new generation is at least as fit as
+	previous.
+\end{itemize}
+
+\subsection{Applications}
+
+\begin{ex}
+A low-pass filter is used in a hi-fi system to send only the lowest frequencies to the woofer speaker. Circuit starts
+as an embryo, consisting of a single wire running from the input to the output. The crossover and mutation operations
+acting on numerical expressions will adjust component values so that the cutoff frequency approaches the desired 1,000
+Hz.
+\end{ex}
+
+\begin{ex}
+Small improvements in the ``tuning rules'' used in customizing a controller can result in large benefits. An example is
+the proportional-integral-derivative controller (PID controller). This is a control loop feedback mechanism
+(controller) widely used in industrial control systems and calculates  the error value as the difference between a
+measured process variable and a desired set-point.
+\end{ex}
+
+\subsection{Hardware}
+The evolutionary process requires efficiently evaluating the fitness of thousands or millions of offspring in each
+generation. This can be achieved either by simulation or using rapidly reconfigurable field-programmable gate arrays.
+
+\subsection{Run Time}
+Evolution in nature thrives when organisms are distributed in semi-isolated subpopulations. The same seems to be true
+of genetic programming run on a loosely connected network of computers. This can be achieved by migrating a small
+percentage of individuals (selected based on fitness) ,at the end of each generation, to adjacent computers.
+
+\subsection{Intelligence}
+Genetic programming is delivering human-competitive machine intelligence with a minimum of human involvement for each
+new problem and without using either logical deduction or a database of human knowledge. By being able to duplicate
+existing, granted patents, it has passed the patent office's intelligence test.
+
+\end{document}

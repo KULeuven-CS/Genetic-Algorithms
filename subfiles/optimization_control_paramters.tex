@@ -1,0 +1,120 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\begin{mdframed}
+\fullcite{4075583}
+\end{mdframed}
+
+\begin{abstract}
+The task of optimizing a complex system presents at least two levels of problems for the system designer. First, a
+class of optimization algorithms must be chosen that is suitable for application to the system. Second, various
+parameters of the optimization algorithm need to be tuned for efficiency. A class of adaptive search procedures called
+genetic algorithms (GA) has been used to optimize a wide variety of complex systems. GA's are applied to the second
+level task of identifying efficient GA's for a set of numerical optimization problems. The results are validated on an
+image registration problem. GA's are shown to be effective for both levels of the systems optimization problem.
+\end{abstract}
+
+\subsection{Introduction}
+
+When considering optimization problems, different techniques can be considered. Often, the choice of parameters that
+must be tuned have a significant impact on the effectiveness of the method. This problem represents a secondary
+optimization, on the meta-level. Here, the GA class of optimization algorithms is considered for that purpose.
+
+The paper describes experiments that search a parametrized space of GA's in order to identify efficient GA's for the
+task of optimizing a set of numerical functions. This search is performed by a meta-level GA. It is shown that genetic
+algorithms are suitable for both levels of optimization.
+
+\subsection{Experimental Design}
+The searches for the optimal GA's were performed by GA's. This demonstrates the efficiency and power of GA's as meta-
+level optimization techniques. A meta-level GA could similarly search any other space of parameterized optimization
+procedures.
+
+\subsection{Space of Genetic Algorithms}
+
+This study is limited to a particular subclass of GA's characterized by the following six parameters.
+
+\begin{enumerate}
+	\item \textbf{Population Size (N)} \\
+	A large population is more likely to contain representatives from a larger number of hyperplanes. Thus, it performs
+	a more informed search. However, a large population requires more evaluations, possibly causing an unacceptable
+	rate of convergence.
+
+	\item \textbf{Crossover Rate (C)} \\
+	The crossover rate controls the frequency of applying this operator. A higher rate leads to faster introduction of
+	new structures but can cause them to be discarded before selection can produce improvements. A too low rate may
+	cause stagnation.
+
+	\item \textbf{Mutation Rate (M)} \\
+	Mutation increases the variability of the population. Approximately $M \cdot N \cdot L$ mutations occur per
+	generation. It intents to prevent forever converting to the same local optimum.
+
+	\item \textbf{Generation Gap (G)} \\
+	The generation gap determines what percentage of the population is replaced each generation. Thus, $N \cdot (1-G)$
+	individuals survive intact in the next generation.
+
+	\item \textbf{Scaling Window (W)} \\
+	The performance value of a structure $x$ is defined as $u(x) = f(x) - f_{\text{min}}$. Here $f_{\text{min}}$ is the
+	minimum value $f$ can achieve in the search space. This transformation guarantees that that the performance is
+	positive. Because this is usually not know a priori, it can be substituted by $f(x_{\text{min}})$. Unfortunately,
+	it makes distinguishing good values of $x$ hard. Three scaling modes are considered, based on the parameter $W$.
+
+	\begin{itemize}
+		\item If $W = 0$, then $f'_{\text{min}}$ is set to the minimum $f(x)$ in the first generation. In succeeding
+		generations, all structure that evaluate to less than $f'_{\text{min}}$  are ignored. The value of
+		$f'_{\text{min}}$ is updated when \textbf{all} structures in the population have evaluations greater than
+		$f'_{\text{min}}$.
+		\item If $0 < W < 7$, then we set $f'_{\text{min}}$ to the least value of $f(x)$ in the last $W$ generations.
+		\item If $W = 7$, an infinite window is specified and no scaling is performed.
+	\end{itemize}
+
+	\item \textbf{Selection Strategy (S)} \\
+	Two selection strategies are considered.
+	\begin{itemize}
+		\item \textbf{Pure Selection Strategy} \\
+		If $S = P$, then a pure selection strategy is used, where each structure in the current population is
+		reproduced a number of times proportional to its performance.
+		\item \textbf{Elitist Selection Strategy} \\
+		If $S = E$, then an elitist selection strategy is used. First, pure selection is performed. The best performing
+		structures survive intact into the next generation.
+	\end{itemize}
+\end{enumerate}
+A genetic algorithm can be identified by these parameters.
+\[
+\text{GA} = (N,C,M,G,W,S)
+\]
+The Cartesian product of the indicated ranges for the six parameters define a space of $2^{18}$ GA's. Sometimes it is
+possible to predict how a single parameter will after the performance, assuming all others are kept fixed. Generally,
+it is difficult to predict their interaction.
+
+\subsubsection{Performance Measures}
+
+Two performance measures for adaptive search strategies were considered: \textbf{online performance} and
+\textbf{offline performance}. The former is a relevant measure when the search can be performed offline, while the best
+structure so far is used to control the latter.
+
+\subsection{Results}
+In summary, the performance of GA's appear to be a nonlinear function of the control parameters. Nevertheless, the
+available data is too limited to confirm or disconfirm the existence of discontinuities or multiple local optima in the
+performance space of GA's.
+
+\begin{itemize}
+	\item Mutation rates above $0.05$ are generally harmful with respect to online performance. Performance approaches
+	random search with a value grater than $0.10$, regardless of other parameter settings.
+	\item Best online performance can be obtained with a population size in the range $30 - 100$.
+	\item A large generation gap generally improves performance, as does the elitist strategy.
+	\item The adoption of a small scaling window (1-5 generations) is associated with a slight improvement in both
+	online and offline performance. Scaling enhances the pressure in the later stages of the search.
+	\item For small populations (20 to 40) structures, good online performance is associated with either high crossover
+	rate + low mutation rate or low crossover rate + high mutation rate.
+	\item For mid-sized populations (30 to 90 structures), the optimal crossover rate appears to decrease as the
+	population size increases.
+\end{itemize}
+
+\subsection{Conclusion}
+The experimental data also suggests that, while it is possible to optimize GA control parameters, very good
+performance can be obtained with a range of GA control parameter settings. An alternative approach to the optimization
+of GA's would be to enable the GA to modify its own parameters dynamically
+during the search.
+
+\end{document}

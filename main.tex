@@ -1,0 +1,91 @@
+\documentclass[a4paper, 10pt, oneside]{article}
+
+% Essentials
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+\usepackage[tmargin=3cm, bmargin=3cm, lmargin=2cm, rmargin=2cm]{geometry}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+
+% Bibliography
+\bibliography{main}
+
+% Optional but useful
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{subfiles}
+\usepackage{enumitem}
+\usepackage{tabularx,booktabs,multirow}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{lipsum}
+\usepackage{mdframed}
+\usepackage{csquotes}
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titling}
+
+% Fancy Header
+\pagestyle{fancy}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot{}
+
+% Indentation
+\setlength\parindent{0pt}
+
+% Title
+\title{Genetic Algorithms: Summaries}
+\date{\today}
+\author{\textbf{Jonas~Devlieghere} \\ \texttt{jonas.devlieghere@student.kuleuven.be}}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem{ex}{Example}[subsection]
+\newtheorem{experiment}{Experiment}[subsection]
+
+\begin{document}
+
+% Title page
+\maketitle
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Main Matter
+\section{Evolving Inventions}
+\subfile{subfiles/evolving_inventions.tex}
+
+\section{Genetic Algorithms, Constraints, and the Knapsack Problem}
+\subfile{subfiles/knapsack.tex}
+
+\section{Evolving 3D Morphology and Behavior by Competition}
+\subfile{subfiles/evolving_morphologie.tex}
+
+\section{Evolution of Adaptive Behavior in Robots}
+\subfile{subfiles/adaptive_robots.tex}
+
+\section{A Knowledge-Intensive GA for Supervised Learning}
+\subfile{subfiles/knowledge_intensive_ga.tex}
+
+\section{Using GA For Supervised Concept Learning}
+\subfile{subfiles/supervised_concept_learning.tex}
+
+\section{Optimization of Control Parameters for Genetic Algorithms}
+\subfile{subfiles/optimization_control_paramters.tex}
+
+\section{Maintaining Healthy Population Diversity}
+\subfile{subfiles/healthy_population_diversity.tex}
+
+% Appendix
+\newpage
+\appendix
+\printbibliography
+
+\end{document}

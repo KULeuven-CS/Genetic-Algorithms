@@ -1,0 +1,69 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\begin{mdframed}
+\fullcite{Floreano:Evolution:2010}
+\end{mdframed}
+
+The paper illustrates how the process of natural selection can lead to the evolution of complex traits. After only a
+few 100 generations, robots evolve to present collision-free movement, homing, sophisticated predator versus prey
+behavior, co-adaptation of brain and bodies, cooperation and even altruism.
+
+Robots are controlled by a simple neural network. Genes do not specify behavior directly but encode molecular products
+that lead up to the development of brains and bodies.
+
+\subsection{Principle of Selection}
+
+The general idea of evolutionary robotics is to create a population with different genomes. Input neurons are activated
+by the robot's sensors and the output neurons controller the motors of the robot. Different neural networks lead up to
+individual responses to sensory-motor interactions with the environment. Genomes are paired an mutation leading to new
+genomes. The process is repeated over many generations until a stable behavioral strategy is established.
+
+\subsection{Experiments}
+
+\begin{experiment}
+Darwinian selection has been used to generate small-wheeled robots that perform collision-free navigation. This
+requires appropriate processing of sensor information and activation of the motors. The robot use 8 distance sensors
+connected to 8 input neurons. After about $100$ generations, most of the robots exhibited collision-free navigation.
+\end{experiment}
+
+\begin{experiment}
+This experiment was conducted to answer the question whether the robots could evolve the ability to find their way
+home. The experiment was set up around a dark room with a light source at the home location. The robot's battery
+discharged over 50 motor-cycles and was instantaneously generated once home. After 200 simulations, the best robot
+explored the arena while only returning home when its batteries had approximately 10\% residual energy.
+\end{experiment}
+
+\begin{experiment}
+Experimental evolution with robots has also been used to study the co-evolutionary processes between a population of
+predator robots and a population of prey robots. Both are equipted with distance sensors. Prey predators are twice as
+fast but the predator has an additional vision system that can perceive the black stick present on the prey. Preys
+developed fast motion while predators would visually track them. Interestingly, because of the weak selection pressure
+for wall avoidance, the predators would lose this ability. They had become so efficient that the prey would be caught
+before hitting a wall.
+\end{experiment}
+
+\subsection{Evolution of Brains and Body Morphologies}
+Experimental evolution has also been used to co-evolve artificial brains and morphologies of simulated robots. The work of Sims \cite{Sims:1994:EMB:1667943.1667946} is discussed here. Please refer to this summary.
+
+\subsection{Evolution of Cooperation and Altruism}
+Experimental evolution was also used to investigate whether robots could evolve cooperative and altruistic behavior.
+
+\begin{experiment}
+The experimental setup consisted of a foraging situation in a square arena containing ten sugar cube-sized wheeled
+robots, small tokens that a single robot could push, and large tokens requiring at least two robots to be pushed. A
+large token successfully pushed along the white wall increased the fitness of all robots within a group while a small
+token successfully pushed increased the fitness of only the robot that pushed it.
+
+In groups of unrelated robots, they invariably specialized in pushing the small objects. By contrast, the presence of
+related robots within groups allowed the evolution of altruism.
+\end{experiment}
+
+\subsection{Conclusion}
+These examples of experimental evolution with robots verify the power of evolution by mutation, recombination, and
+natural selection. A major issue in evolutionary robotics is that agents may use idiosyncratic features of the
+environment in which they are selected to increase performance, hence leading to a major fitness drop in new
+environments where these features are lacking. Nevertheless, it provides a powerful means to study how phenotypes can
+be shaped by natural selection and address questions that are difficult to address with real organisms.
+\end{document}
