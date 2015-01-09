@@ -48,7 +48,8 @@ without them useless. The latter approach is chosen.
 
 \subsubsection{Defining Fixed-length Classifier Rules}
 
-Having chosen for a representation that minimizes the standard operators, the concept description language needs to be chosen carefully. A disjunctive set of classification rules (DNF) is a natural way to do so.
+Having chosen for a representation that minimizes the standard operators, the concept description language needs to be
+chosen carefully. A disjunctive set of classification rules (DNF) is a natural way to do so.
 
 \[
 \text{IF} \{ \text{conjunction of test involving feature values} \} \text{THEN} \{ \text{rule indicating concept} \}
@@ -74,19 +75,78 @@ rule boundary, then the other parent must be also cut on a rule boundary. The mu
 performs the usual bit-level mutations.
 
 \subsubsection{Choosing a Payoff Function}
+The payoff function is the natural place to centralize and make explicit any biases (preferences) for certain kinds of
+concept descriptions. A payoff function involving only classification performance is chosen. The payoff (fitness) of
+each individual rule set is computed by testing the rule set on the current set of examples and letting:
+
+\begin{equation}
+	\text{payoff}(\text{individual}_i) = (\text{percent correct})^2
+\end{equation}
+
+This provides a non-linear bias toward correctly classifying all the examples while providing differential reward for
+imperfect rule sets.
 
 \subsubsection{The GA Concept Learner}
+
+The simplest approach involves using a batch mode in which a fixed set of examples is presented, and the GA must search
+the space of variable-length strings described above for a set of rules which achieves a score of 100\%. We will call
+this approach GABL (GA Batch concept Learner). The search terminates as soon as a 100\% correct rule set is found
+within a user-specified upper bound on the number of generations.
+\\\\
+The simplest way to produce an incremental GA concept learner is to use GABL incrementally in the following way. The
+concept learner initially accepts a single example from a pool of examples. GABL is used to create a 100\% correct rule
+set for this example. This rule set is used to predict the classification of the next example. If the prediction is
+incorrect, GABL is invoked to evolve a new rule set using the two examples. If the prediction is correct, the example
+is simply stored with the previous example and the rule set remains unchanged. As each new additional instance is
+accepted, a prediction is made, and the GA is re-run in batch if the prediction is incorrect. We refer to this mode of
+operation as batch-incremental and we refer to the GA batch-incremental concept learner as GABIL.
 
 \subsection{Empirical Studies}
 
 \subsubsection{Evaluating Concept Learning Programs}
-
-\subsubsection{Implementation Details}
+An incremental concept learner will make a prediction for each new instance seen. Each prediction is either correct or
+incorrect. We are interested in examining how an incremental system changes its predictive performance over time. We
+examine a small window of recent outcomes, counting the correct predictions within that window. Performance curves can
+then be generated which indicate whether a concept learner is getting any better at correctly classifying new (unseen)
+examples
 
 \subsubsection{Initial Experiments}
 
-\subsection{Further Analysis and Comparisons}
+\begin{itemize}
+	\item Demonstrate the predictive performance of GABIL as a function of incremental increases in the size and
+	complexity of the target concept.
+	\item Compare performance with an existing algorithm, Utgoff’s ID5R, which is a well-known incremental concept
+	learning algorithm.
+\end{itemize}
+
+\paragraph{ID5R vs GABIL}
+
+\begin{itemize}
+	\item ID5R relies upon Quinlan’s information theoretic entropy measure to build its decision trees. This measure
+	works well when individual features are meaningful in distinguishing an example as positive or negative.  ID5R’s
+	information theoretic biases will therefore perform better on simpler target concepts.
+	\item GABIL, however, should perform uniformly well on target concepts of varying complexity.There is also no bias
+	towards a small number of disjuncts.
+\end{itemize}
+
+Given these biases (and lack of biases), it is natural to expect that while ID5R will outperform GABIL on the simpler
+concepts, there will exist a frontier at which the situation will reverse.
+
+\paragraph{Results}
+
+ID5R’s biases favor concepts that can be represented with small decision trees GABIL does not have these biases, and
+appears to be less sensitive to increasing numbers of disjuncts and conjuncts. GABIL does not degrade significantly
+with increasing target concept complexity and outperforms ID5R on 4 disjunct concepts. Since the syntactic complexity
+of a target concept corresponds roughly with the size of its decision tree representation, we expect this trend to
+continue with more difficult target concepts.
 
 \subsection{Conclusion}
+This paper presents a series of initial results regarding the use of GAs for symbolic learning tasks. In particular, a
+GA-based concept learner is developed and analyzed. It is interesting to note that reasonable performance is achieved
+with minimal bias. There is no preference for shorter rule sets, unlike most other concept learning systems. The
+initial results support the view that GAs can be used as an effective concept learner although they may not outperform
+algorithms specifically designed for concept learning when simple concepts are involved. This paper also sets the stage
+for additional comparisons between GAs and other concept learning algorithms. We feel that such comparisons are
+important and encourage the research community to develop additional results on these and other problems of interest.
 
 \end{document}
