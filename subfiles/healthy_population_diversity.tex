@@ -50,9 +50,165 @@ population's search coverage but it also endows the population with a degree of 
 The SPD describes the level of variation in a population. Genetic diversity is a very important component of
 evolutionary exploration since a GA can only search the space offered to it by the genes present in the population.
 
+Traditional GA's can suffer from early convergence. Individuals converge to a relatively fit area trough repeated selection of similar individuals. This is of course undesirable when it's only a local optimum.
+
+High mutation rate can scatter individuals to introduce novel genetic information. ACROMUSE implements such an adaptive mutation operator. The trade-off is that high mutation rates are generally destructive from a fitness perspective.
+
 \subsubsection{Calculating SPD}
+
+SPD is calculated by finding the position of the average individual within the population and summing the gene-wise
+Euclidean distances from this average point to the location of each individual. ACROMUSE’s population consists of $P$ individuals ($G_1$ to $G_P$) where each individual consist of $N$ genes: $G_i = (G_{i,1} \mathellipsis G_{i,N})$.
+
+\begin{equation}
+G_n^{\text{avg}} = \frac{1}{P} \sum_{i=1}^P G_{i,n}
+\end{equation}
+
+A simple summation for SPD is not used because is cannot be normalized, leading to the SPD measure varying immensely for different problems and populations. Therefore, a gene-wise standard deviation is performed.
+
+\begin{equation}
+\text{SPD} = C_v(G^{\text{avg}}) = \frac{1}{N} \sum_{j=1}^N \left( \frac{\sigma (G^{\text{avg}}_j)}{G^{\text{avg}}_j} \right)
+\end{equation}
+
 \subsubsection{Healthy Population Diversity (HPD)}
+What SPD lacks is that it does not account for the position of individuals in the fitness space. It is possible that
+the populations appears diverged, but that most highly-fit individuals lie within a converged localized area. Healthy
+individuals are population members that achieve good fitness scores. HPD is a a fitness-weighted measure of population
+diversity. It differs from SPD in that each individual's contribution to diversity in the solution space is influenced
+according to its fitness.
+
 \subsubsection{Calculating HPD}
+In contrast to SPD that exclusively considers the solution space, HPD merges both fitness and solution spaces by
+weighting each individual's distance contribution in the solution space according to its score in the fitness space.
+
+HPD is calculated by finding the position of the weighted average individual within the population and summing the
+gene-wise fitness-weighted distances from this weighted average point to the location of each individual.
+
+\begin{equation}
+\text{HPD} = C_V(G^{\text{W.avg}}) = \frac{1}{N} \sum_{j=1}^N \left( \frac{\sigma (G^{\text{W.avg}}_j)}{G^{\text{W.avg}}_j} \right)
+\end{equation}
+
+Here, $G^{\text{W.avg}}$ is the weighted average individual, computed as the fitness-weighted gene-wise average across all individuals.
+
+\subsection{Adaptive Operation Implementation}
+
+The performance or a traditional GA is highly dependent on the choice of fixed parameters. In contrast, adaptive GA's parameters vary according to population statistics. Here, premature convergence is prevented by modifying the crossover, mutation and selection operators according tot the population's diversity.
+
+\subsubsection{Adaptive Crossover}
+
+Crossover generally converges the population because no new genetic information is  added. The technique of adaptively mutating individuals that do not undergo crossover divides the population into two sections:
+
+\begin{enumerate}
+	\item Exploitation Section
+	\item Exploration Section
+\end{enumerate}
+
+The size of each section is determined by the SPD, with a larger exploration section for low SPD or and larger exploitation section for a high SPD. The crossover probability is given by $P_c$.
+
+\begin{equation}
+P_c = \bigg[ \left( \frac{\text{SPD}}{\text{SPD}_\text{max}} \cdot (K_2 - K_1) \right) + K_1 \bigg]
+\end{equation}
+
+\subsubsection{Adaptive Mutation}
+The adaptive mutation rate $P_m$ is an average of two mechanisms: SPD controlled mutation ($P_m^{\text{Diversity}}$) and parent fitness controlled mutation ($P_m^{\text{Fitness}}$)
+
+\begin{equation}
+P_m^{\text{Diversity}} = \frac{\text{SPD}_\text{max} - \text{SPD}}{\text{SPD}_\text{max}} \cdot K
+\end{equation}
+\begin{equation}
+P_m^{\text{Fitness}} = \left( \frac{f_{\text{max}} - f}{f_{\text{max}} - f_{\text{min}}} \right) \cdot K
+\end{equation}
+\begin{equation}
+	P_m = \frac{P_m^{\text{Diversity}}  + P_m^{\text{Fitness}}}{2}
+\end{equation}
+
+\subsubsection{Adaptive Selection}
+
+\paragraph{Limitations Adaptive Crossover and Mutation} Most mutations have a negative impact on fitness. This is
+because, for most problems, high-fitness areas are sparse in the fitness landscape. A nonadaptive selection operator
+continued to choose from the same converged cluster of highly fit individuals (exploitation segment of the population),
+neglecting the less-fit individuals scattered throughout the fitness landscape by the exploration segment.
+
+\paragraph{Rationale for Adaptive Selection} From a selection perspective, a diverged parent population does not
+automatically result in diverged offspring.  A tournament size equal to the population size equates to elitism, while a
+tournament size of 1 equates to random selection. Therefore, decreasing tournament size in a converged population
+provides outlying individuals with a chance of selection. The SPD measure is unfortunately not a good indicator, as selection pressure will increase in case of high SPD, but selection will return to a converged high fitness section due to low HPD.
+
+\paragraph{Proposed Adaptive Selection Operator} The HPD measure controls tournament size. When the population is
+converged from a fitness-based perspective, low-fitness outliers are offered a greater chance of selection.
+
+\begin{equation}
+\text{Tsize} = \left\lceil \frac{\text{HPD}}{\text{HPD}_\text{max}} \cdot \text{Tsize}_\text{max} \right\rceil
+\end{equation}
+
+\paragraph{Tradition Tournament Selection}
+
+Tournament selection involves selecting a number ($\text{Tsize}$) of individuals randomly from the population, with the
+best individual from this group being selected as a parent. The best individual is the one with the highest fitness.
+
+\paragraph{Adaptive Tournament Selection} Rather than selecting the individual with the highest fitness, the individual
+with the largest healthy diversity contribution is selected. This ensures that selection recognizes both diversity
+contribution and fitness in choosing the best individuals for reproduction.
+
+\subsection{GA Review}
+
+\begin{itemize}
+	\item \textbf{Traditional Genetic Algorithm (TGA)} \\
+	The TGA does not employ adaptive operators. Default parameters are optimal in many cases but present a significant risk of premature convergence.
+
+	\item \textbf{Fitness Sharing (FS)} \\
+	Individuals within a certain ``share-radius'' of each other have their fitness penalized according to a sharing
+	function. This limits the number of individuals that can successfully occupy a niche and, therefore, encourages
+	exploration of other potential high-fitness areas.
+
+	\item \textbf{Deterministic Crowding (DC)} \\
+	DC is an elegant, elitist algorithm which insists that an offspring must be better than its most genotypically-
+	similar parent in order to progress to the next generation.
+
+	\item \textbf{CHC GA} \\
+	Individuals are randomly selected for crossover, therefore, giving every individual an equal chance of
+	reproduction. However, crossover is only allowed if individuals are sufficiently different genotypically. If no
+	crossover is possible at the current threshold, the threshold is decremented and
+	crossover is re-attempted.
+
+	\item \textbf{Boltzmann Roulette Selection (BRS)} \\
+	This method begins search with a lowselection pressure and increases the pressure steadily according to a
+	predefined schedule. This approach affords greater exploration in the early stages of search, with increased
+	exploitation later.
+\end{itemize}
+
+\subsection{Conclusion}
+For the multimodal functions employed, ACROMUSE outperforms all other investigated algorithms with regard to locating
+and recovering the best solution in the shortest time. For the multimodal functions employed, ACROMUSE outperforms all
+other investigated algorithms with regard to locating and recovering the best solution in the shortest time.
+Maintaining a diverse population is important for increasing population search coverage and for dealing with fitness
+landscape change. Results demonstrate that through maintaining high HPD, ACROMUSE copes well with environmental change,
+restoring better fitness scores faster than all other investigated algorithms.
+
+\begin{itemize}
+
+	\item \textbf{Traditional Genetic Algorithm (TGA)} \\
+	TGA exhibits all the negative side effects associated with strong, nondynamic selection pressure and low- static
+	mutation rates (i.e., loss of diversity/premature convergence at local optima).
+
+	\item \textbf{Fitness Sharing (FS)} \\
+	FS fails to maintain the same levels of SPD or HPD as ACROMUSE.
+
+	\item \textbf{Deterministic Crowding (DC)}
+	DC exhibits good fitness results, comparable to those obtained from FS, though DC diversity is lost much more
+	steadily than with FS or ACROMUSE, due to genetic drift inherent within the algorithm. In addition to this drift,
+	DC’s inability to introduce novel diversity results in poor performance in the event of environmental change.
+
+	\item \textbf{CHC GA} \\
+	CHC with its population re-initialization mechanism performs competitively (fitness and diversity-wise) with the
+	other niching algorithms, particularly in introducing novel diversity after fitness landscape change.
+
+	\item \textbf{Boltzmann Roulette Selection (BRS)} \\
+	BRS demonstrates good performance in escaping local optima in the initial stages of search but can still become
+	trapped at later generations, particularly after fitness landscape change. Indeed, BRS was not designed to maintain
+	long-term diversity.
+
+\end{itemize}
 
 
 \end{document}
+
