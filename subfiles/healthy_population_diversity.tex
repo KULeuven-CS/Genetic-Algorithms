@@ -22,27 +22,34 @@ scores faster than other GAs. Analysis of the adaptive operators illustrates tha
 synergy of the operators working together to achieve an effective balance between exploration and exploitation.
 \end{abstract}
 
-Premature population convergence about a local optimum is a common problem. It is usually caused by one of the following reasons.
+Premature population convergence about a local optimum is a common problem. It is usually caused by one of the
+following reasons.
 
 \begin{enumerate}
 	\item \textbf{Incorrect application of selection pressure:} Whereby a ``super-performer'' in the population
 	dominates the selection procedure and eliminates much of the population's diversity.
 	\item \textbf{Too low mutation rate:} diversity is lost trough selection and not recovered via mutation.
-	\item \textbf{Loss of crossover efficacy:} As a population becomes more converged, recombination of similar individuals causes similar offspring (inbreeding).
+	\item \textbf{Loss of crossover efficacy:} As a population becomes more converged, recombination of similar
+	individuals causes similar offspring (inbreeding).
 \end{enumerate}
 
-This papers presents \textbf{ACROMUSE} which adapts the crossover, mutation and selection parameters. The main goal is maintaining a diverse population of healthy individuals. It employs two measures to of population diversity.
+This papers presents \textbf{ACROMUSE} which adapts the crossover, mutation and selection parameters. The main goal is
+maintaining a diverse population of healthy individuals. It employs two measures to of population diversity.
 
 \begin{itemize}
 	\item \textbf{Standard Population Diversity (SPD)} \\
-	This measure describes the population's solution space diversity. The SPD measure is used to control mutation and crossover. Crossover employs SPD to divide the population into an \textbf{exploration section} and an \textbf{exploitation section}. The sizes of these sections are controlled by the SPD measure.
+	This measure describes the population's solution space diversity. The SPD measure is used to control mutation and
+	crossover. Crossover employs SPD to divide the population into an \textbf{exploration section} and an
+	\textbf{exploitation section}. The sizes of these sections are controlled by the SPD measure.
 	\item \textbf{Healty Population Diversity (HPD)} \\
 	This measure describes a population’s solution space diversity from a fitness perspective, i.e., a measure of the
-	diversity of healthy individuals. HPD is used to regulate selection pressure. Tournament size is reduced when HPD is low permitting lower-fitness individuals to reproduce.
+	diversity of healthy individuals. HPD is used to regulate selection pressure. Tournament size is reduced when HPD
+	is low permitting lower-fitness individuals to reproduce.
 \end{itemize}
 
 Maintaining a diverse population is very important for GA search. Not only does high-genetic diversity increase the
-population's search coverage but it also endows the population with a degree of robustness in case of environmental change.
+population's search coverage but it also endows the population with a degree of robustness in case of environmental
+change.
 
 \subsection{SPD \& HPD}
 
@@ -50,23 +57,28 @@ population's search coverage but it also endows the population with a degree of 
 The SPD describes the level of variation in a population. Genetic diversity is a very important component of
 evolutionary exploration since a GA can only search the space offered to it by the genes present in the population.
 
-Traditional GA's can suffer from early convergence. Individuals converge to a relatively fit area trough repeated selection of similar individuals. This is of course undesirable when it's only a local optimum.
+Traditional GA's can suffer from early convergence. Individuals converge to a relatively fit area trough repeated
+selection of similar individuals. This is of course undesirable when it's only a local optimum.
 
-High mutation rate can scatter individuals to introduce novel genetic information. ACROMUSE implements such an adaptive mutation operator. The trade-off is that high mutation rates are generally destructive from a fitness perspective.
+High mutation rate can scatter individuals to introduce novel genetic information. ACROMUSE implements such an adaptive
+mutation operator. The trade-off is that high mutation rates are generally destructive from a fitness perspective.
 
 \subsubsection{Calculating SPD}
 
 SPD is calculated by finding the position of the average individual within the population and summing the gene-wise
-Euclidean distances from this average point to the location of each individual. ACROMUSE’s population consists of $P$ individuals ($G_1$ to $G_P$) where each individual consist of $N$ genes: $G_i = (G_{i,1} \mathellipsis G_{i,N})$.
+Euclidean distances from this average point to the location of each individual. ACROMUSE’s population consists of $P$
+individuals ($G_1$ to $G_P$) where each individual consist of $N$ genes: $G_i = (G_{i,1} \mathellipsis G_{i,N})$.
 
 \begin{equation}
 G_n^{\text{avg}} = \frac{1}{P} \sum_{i=1}^P G_{i,n}
 \end{equation}
 
-A simple summation for SPD is not used because is cannot be normalized, leading to the SPD measure varying immensely for different problems and populations. Therefore, a gene-wise standard deviation is performed.
+A simple summation for SPD is not used because is cannot be normalized, leading to the SPD measure varying immensely
+for different problems and populations. Therefore, a gene-wise standard deviation is performed.
 
 \begin{equation}
-\text{SPD} = C_v(G^{\text{avg}}) = \frac{1}{N} \sum_{j=1}^N \left( \frac{\sigma (G^{\text{avg}}_j)}{G^{\text{avg}}_j} \right)
+\text{SPD} = C_v(G^{\text{avg}}) = \frac{1}{N} \sum_{j=1}^N \left( \frac{\sigma (G^{\text{avg}}_j)}{G^{\text{avg}}_j}
+\right)
 \end{equation}
 
 \subsubsection{Healthy Population Diversity (HPD)}
@@ -84,32 +96,39 @@ HPD is calculated by finding the position of the weighted average individual wit
 gene-wise fitness-weighted distances from this weighted average point to the location of each individual.
 
 \begin{equation}
-\text{HPD} = C_V(G^{\text{W.avg}}) = \frac{1}{N} \sum_{j=1}^N \left( \frac{\sigma (G^{\text{W.avg}}_j)}{G^{\text{W.avg}}_j} \right)
+\text{HPD} = C_V(G^{\text{W.avg}}) = \frac{1}{N} \sum_{j=1}^N \left( \frac{\sigma
+(G^{\text{W.avg}}_j)}{G^{\text{W.avg}}_j} \right)
 \end{equation}
 
-Here, $G^{\text{W.avg}}$ is the weighted average individual, computed as the fitness-weighted gene-wise average across all individuals.
+Here, $G^{\text{W.avg}}$ is the weighted average individual, computed as the fitness-weighted gene-wise average across
+all individuals.
 
 \subsection{Adaptive Operation Implementation}
 
-The performance or a traditional GA is highly dependent on the choice of fixed parameters. In contrast, adaptive GA's parameters vary according to population statistics. Here, premature convergence is prevented by modifying the crossover, mutation and selection operators according tot the population's diversity.
+The performance or a traditional GA is highly dependent on the choice of fixed parameters. In contrast, adaptive GA's
+parameters vary according to population statistics. Here, premature convergence is prevented by modifying the
+crossover, mutation and selection operators according tot the population's diversity.
 
 \subsubsection{Adaptive Crossover}
 
-Crossover generally converges the population because no new genetic information is  added. The technique of adaptively mutating individuals that do not undergo crossover divides the population into two sections:
+Crossover generally converges the population because no new genetic information is  added. The technique of adaptively
+mutating individuals that do not undergo crossover divides the population into two sections:
 
 \begin{enumerate}
 	\item Exploitation Section
 	\item Exploration Section
 \end{enumerate}
 
-The size of each section is determined by the SPD, with a larger exploration section for low SPD or and larger exploitation section for a high SPD. The crossover probability is given by $P_c$.
+The size of each section is determined by the SPD, with a larger exploration section for low SPD or and larger
+exploitation section for a high SPD. The crossover probability is given by $P_c$.
 
 \begin{equation}
 P_c = \bigg[ \left( \frac{\text{SPD}}{\text{SPD}_\text{max}} \cdot (K_2 - K_1) \right) + K_1 \bigg]
 \end{equation}
 
 \subsubsection{Adaptive Mutation}
-The adaptive mutation rate $P_m$ is an average of two mechanisms: SPD controlled mutation ($P_m^{\text{Diversity}}$) and parent fitness controlled mutation ($P_m^{\text{Fitness}}$)
+The adaptive mutation rate $P_m$ is an average of two mechanisms: SPD controlled mutation ($P_m^{\text{Diversity}}$)
+and parent fitness controlled mutation ($P_m^{\text{Fitness}}$)
 
 \begin{equation}
 P_m^{\text{Diversity}} = \frac{\text{SPD}_\text{max} - \text{SPD}}{\text{SPD}_\text{max}} \cdot K
@@ -131,7 +150,9 @@ neglecting the less-fit individuals scattered throughout the fitness landscape b
 \paragraph{Rationale for Adaptive Selection} From a selection perspective, a diverged parent population does not
 automatically result in diverged offspring.  A tournament size equal to the population size equates to elitism, while a
 tournament size of 1 equates to random selection. Therefore, decreasing tournament size in a converged population
-provides outlying individuals with a chance of selection. The SPD measure is unfortunately not a good indicator, as selection pressure will increase in case of high SPD, but selection will return to a converged high fitness section due to low HPD.
+provides outlying individuals with a chance of selection. The SPD measure is unfortunately not a good indicator, as
+selection pressure will increase in case of high SPD, but selection will return to a converged high fitness section due
+to low HPD.
 
 \paragraph{Proposed Adaptive Selection Operator} The HPD measure controls tournament size. When the population is
 converged from a fitness-based perspective, low-fitness outliers are offered a greater chance of selection.
@@ -153,7 +174,8 @@ contribution and fitness in choosing the best individuals for reproduction.
 
 \begin{itemize}
 	\item \textbf{Traditional Genetic Algorithm (TGA)} \\
-	The TGA does not employ adaptive operators. Default parameters are optimal in many cases but present a significant risk of premature convergence.
+	The TGA does not employ adaptive operators. Default parameters are optimal in many cases but present a significant
+	risk of premature convergence.
 
 	\item \textbf{Fitness Sharing (FS)} \\
 	Individuals within a certain ``share-radius'' of each other have their fitness penalized according to a sharing
@@ -211,4 +233,3 @@ restoring better fitness scores faster than all other investigated algorithms.
 
 
 \end{document}
-

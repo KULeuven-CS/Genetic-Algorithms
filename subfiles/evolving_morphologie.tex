@@ -82,14 +82,17 @@ parts. The genetic representation of this morphology is a directed graph of node
 
 \subsection{Creature Behavior}
 
-A virtual ``brain'' determines the behavior of a creature. it accepts sensor values and provides output effector values. Sensor, effector, and internal neuron signals are represented by continuously variable scalars.
+A virtual ``brain'' determines the behavior of a creature. it accepts sensor values and provides output effector
+values. Sensor, effector, and internal neuron signals are represented by continuously variable scalars.
 
 \subsubsection{Sensors}
-A sensor is contained within a specific part and measures either aspects of that part of the work relative to that part.
+A sensor is contained within a specific part and measures either aspects of that part of the work relative to that
+part.
 
 \begin{enumerate}
 	\item \textbf{Joint angle sensors:} give the current value for each degree of freedom of each joint.
-	\item \textbf{Contact sensors:} activate positively when contact is made and negatively otherwise. There is no distinction between self contact or environmental contact.
+	\item \textbf{Contact sensors:} activate positively when contact is made and negatively otherwise. There is no
+	distinction between self contact or environmental contact.
 	\item \textbf{Photosensors:}  react to a global light source position. Photosensors for two independent colors are
 	made available, for the light located in the cube and the light located at the center of mass of the opponent.
 \end{enumerate}
@@ -145,8 +148,11 @@ their directed graph genotypes.
 Sexual reproduction allows components from more than one parent to be combined into new offspring.
 
 \begin{itemize}
-	\item \textbf{Crossover:} The nodes of two parents are each aligned in a row as they are stored, and the nodes of the first parent are copied to make the child, but one or more crossover points determine when the copying source should switch to the other parent.
-	\item \textbf{Grafting:} A node of one parent is connected to a node of another.  The first parent is copied, and one of its connections is chosen at random and adjusted to point to a random node in the second parent.
+	\item \textbf{Crossover:} The nodes of two parents are each aligned in a row as they are stored, and the nodes of
+	the first parent are copied to make the child, but one or more crossover points determine when the copying source
+	should switch to the other parent.
+	\item \textbf{Grafting:} A node of one parent is connected to a node of another.  The first parent is copied, and
+	one of its connections is chosen at random and adjusted to point to a random node in the second parent.
 	\item \textbf{Asexual:} Here a child is created only by mutation.
 \end{itemize}
 

@@ -23,39 +23,55 @@ powerful tool enabling study of the widely accepted but not so well understood i
 
 \subsection{Introduction}
 
-With a growing amount of information, knowledge-extraction capabilities have become very important in order to understand the world. Machine learning is an attempt to solve this problem. There are two main groups of approaches:
+With a growing amount of information, knowledge-extraction capabilities have become very important in order to
+understand the world. Machine learning is an attempt to solve this problem. There are two main groups of approaches:
 
 \begin{itemize}
-	\item \textbf{Non-Symbolic:} Non-symbolic, inductive learning systems, also called subsymbolic, do not acquire explicit knowledge but gather other information necessary for the descriptive model. An example are \emph{statistical models}. All non-symbolic appraoches process low-level entities (usually numerical parameters).
-	\item \textbf{Symbolic:}  Symbolic systems produce knowledge in a high-level descriptive language. Mechanisms based on symbol manipulation, in addition to being closely related to their objectives, allow for the use of the same input and output language.
+	\item \textbf{Non-Symbolic:} Non-symbolic, inductive learning systems, also called subsymbolic, do not acquire
+	explicit knowledge but gather other information necessary for the descriptive model. An example are
+	\emph{statistical models}. All non-symbolic appraoches process low-level entities (usually numerical parameters).
+	\item \textbf{Symbolic:}  Symbolic systems produce knowledge in a high-level descriptive language. Mechanisms based
+	on symbol manipulation, in addition to being closely related to their objectives, allow for the use of the same
+	input and output language.
 \end{itemize}
 
 Genetic algorithms have been successfully applied to a number of problems. It can and has be used as an approach to
 supervised learning. This work follows a different approach than earlier work: rather than trying to extend the set of
 operators, we start with a set of inference rules specific to the task, and incorporate them into the genetic algorithm
 framework. This leads to a  task-specific problem-solving methodology and abstract the genetic algorithm's inference to
-the problem-specific symbol level. This is a knowledge-intensive approach, because it uses a vast amount of task-specific information in the genetic operations.
+the problem-specific symbol level. This is a knowledge-intensive approach, because it uses a vast amount of task-
+specific information in the genetic operations.
 
 \subsection{Inductive Learning From Examples}
 Concept learning is a fundamental cognitive process that involves learning descriptions
-of some categories of objects.  Learning is said to be attributed-based when objects are described by features (attribute-value pairs). Learning is supervised when examples are pre-classified as belonging to a space.
+of some categories of objects.  Learning is said to be attributed-based when objects are described by features
+(attribute-value pairs). Learning is supervised when examples are pre-classified as belonging to a space.
 \\\\
 When learning concepts, a mechanism is needed to account for possible cases of no-match and multiple-match when
 recognizing new events. The initial design assumes that the subspace not covered by the description is the complement
 of the concept.
 \\\\
-The definition of the input- and output language is an important issue. The input language is an interface between the environment and the system, and therefore should combine the requirements of both. The output language on the other hand has to combine the requirements of the system and the application environment.
+The definition of the input- and output language is an important issue. The input language is an interface between the
+environment and the system, and therefore should combine the requirements of both. The output language on the other
+hand has to combine the requirements of the system and the application environment.
 \\\\
-The language $VL_1$ is used. Variables (attributes) are the basic units, having multivalued domains. According to the relationship among different domain values, such domains may be of different types: nominal, linear or structured with partially ordered values. relations associate variables with their values by means of selectors with natural semantics.
+The language $VL_1$ is used. Variables (attributes) are the basic units, having multivalued domains. According to the
+relationship among different domain values, such domains may be of different types: nominal, linear or structured with
+partially ordered values. relations associate variables with their values by means of selectors with natural semantics.
 \\\\
-There are two approaches to learning from examples: one approach assumes a working memory that can remember all previously seen examples (\textbf{Full Memory Learning}) while the other assumes that memory is only available for generated knowledge. Incremental learning is associated with previously generated knowledge and previously seen examples. It is an important characteristic because it mimics human learning and because learning systems frequently display dynamic properties where evidence becomes available from time to time.
+There are two approaches to learning from examples: one approach assumes a working memory that can remember all
+previously seen examples (\textbf{Full Memory Learning}) while the other assumes that memory is only available for
+generated knowledge. Incremental learning is associated with previously generated knowledge and previously seen
+examples. It is an important characteristic because it mimics human learning and because learning systems frequently
+display dynamic properties where evidence becomes available from time to time.
 
 
 \subsection{Previous Approaches}
 
 \subsubsection{Traditional Approaches}
 Statistical approaches account for the vast majority of non-symbolic, or numerical, approaches. The disadvantage of
-these approaches is that they rely on low-level processing for high-level learning. Examples are \textbf{Bayesian} and \textbf{Neural Network} methods. The fact that this approach perform numerical computations leads to an
+these approaches is that they rely on low-level processing for high-level learning. Examples are \textbf{Bayesian} and
+\textbf{Neural Network} methods. The fact that this approach perform numerical computations leads to an
 apparent advantage of better applicability to processing noisy information.
 
 The two prominent symbolic approaches to supervised feature-based learning, recognized
@@ -81,16 +97,21 @@ traditional fixed-length representation is unsuitable. Two different approaches 
 	the population still consists of fixed-length elements, but the solution is represented by a set of chromosomes
 	from the population.
 	\item \textbf{Pittsburgh Approach} \\
-	Here, variable-length chromosomes are used to represent proposed solutions individually. For supervised learning, tis would mean each chromosome represents an independent solution.
+	Here, variable-length chromosomes are used to represent proposed solutions individually. For supervised learning,
+	tis would mean each chromosome represents an independent solution.
 \end{itemize}
 
-With very few exceptions all systems for rule-based learning use a three-symbol alphabet $\{0, 1, \#\}$. it is not so well suited for non-binary domains because it increases the representation length. The approach used in this work is to model closely the non-redundant and feasible only representation of $VL_1$.
+With very few exceptions all systems for rule-based learning use a three-symbol alphabet $\{0, 1, \#\}$. it is not so
+well suited for non-binary domains because it increases the representation length. The approach used in this work is to
+model closely the non-redundant and feasible only representation of $VL_1$.
 
 \subsection{The Modified GA}
 
 \subsubsection{Ideas}
 The need for problem-specific knowledge incorporation into GAs was recognized as a method for improvement in many
-different domains. Following the Pittsburgh approach, the spectrum of GA designs ranges from classical operations to a knowledge-intensive approach with where operators follow a specific problem-solving methodology. The problem with the latter is the lack of a theoretical foundation and that it is more distant from nature.
+different domains. Following the Pittsburgh approach, the spectrum of GA designs ranges from classical operations to a
+knowledge-intensive approach with where operators follow a specific problem-solving methodology. The problem with the
+latter is the lack of a theoretical foundation and that it is more distant from nature.
 \\\\
 All operations in this work are special cases of the traditional operators. This provides an intuitive support for the
 same theoretical foundations. Also, because the operators are defined on the semantic pieces of the problem, one may
@@ -109,7 +130,9 @@ Because of the assumption of learning only a single concept description, all rul
 decision.
 
 \subsubsection{Initial Population}
-The population must initially be filled with possible solutions, either randomly generated or incorporating task specific knowledge. This problem to generate a initialization that produces actual solutions is as hard as the one we're trying to solve. A compromise between the two uses three different types:
+The population must initially be filled with possible solutions, either randomly generated or incorporating task
+specific knowledge. This problem to generate a initialization that produces actual solutions is as hard as the one
+we're trying to solve. A compromise between the two uses three different types:
 
 \begin{enumerate}
 	\item \textbf{Random:} Each individual is a set of a random number of complexes, randomly generated on the search
@@ -219,7 +242,8 @@ specific generalization.
 
 \paragraph{Operator Selection Probability}
 Each operator is given some initial probabilities from two separate groups: selection and application probabilities.
-The selection probabilities serve to select one of a number of possible actions and are static. The application probabilities server to fire operators for structures of their type and have a dynamic character.
+The selection probabilities serve to select one of a number of possible actions and are static. The application
+probabilities server to fire operators for structures of their type and have a dynamic character.
 
 \begin{itemize}
 	\item Probabilities of generalizing operators are increased for applications to structures (rule sets, rules,
@@ -229,14 +253,17 @@ The selection probabilities serve to select one of a number of possible actions 
 	\item
 \end{itemize}
 
-These two measures server as an additional heuristic to the fitness. The new value $p'$ is the adjusted probability, and $p$ is the actual probability. The value of $p'$ is computed differently for each rule and rule set.
+These two measures server as an additional heuristic to the fitness. The new value $p'$ is the adjusted probability,
+and $p$ is the actual probability. The value of $p'$ is computed differently for each rule and rule set.
 
 \begin{equation}
-	\text{Generalizing operators:} p' = p \cdot \left( \frac{3}{2} - \text{completeness} \right) \cdot \left( \frac{1}{2} + \text{consistency} \right)
+	\text{Generalizing operators:} p' = p \cdot \left( \frac{3}{2} - \text{completeness} \right) \cdot \left(
+	\frac{1}{2} + \text{consistency} \right)
 \end{equation}
 
 \begin{equation}
-	\text{Specializing operators:} p' = p \cdot \left( \frac{1}{2} + \text{completeness} \right) \cdot \left( \frac{3}{2} - \text{consistency} \right)
+	\text{Specializing operators:} p' = p \cdot \left( \frac{1}{2} + \text{completeness} \right) \cdot \left(
+	\frac{3}{2} - \text{consistency} \right)
 \end{equation}
 
 \subsection{Implementation Issues}
@@ -245,7 +272,9 @@ A prototype was implemented in C, named GIL (for Genetic-Based Inductive Learnin
 
 \subsubsection{Sampling Mechanism}
 
-GIL uses use the stochastic universal sampling mechanism. Here, a roulette wheel is constructed for chromosomes with a portion allocated proportionally to its fitness. Another wheel is constructed with equally spaced marks. The wheels are spun against each other. A chromosome is selected once for each mark landing in its allocated space.
+GIL uses use the stochastic universal sampling mechanism. Here, a roulette wheel is constructed for chromosomes with a
+portion allocated proportionally to its fitness. Another wheel is constructed with equally spaced marks. The wheels are
+spun against each other. A chromosome is selected once for each mark landing in its allocated space.
 
 \subsubsection{Internal Representation}
 
@@ -276,8 +305,10 @@ mentioned, all data are pre-compiled into such vectors, for all possible feature
 % \\\\
 % The original claim of the GABIL system was that it could not learn as well as ID5R on simple concepts, but achieved
 % about the same levels of performance as the concepts' complexity increased. Our results show that GIL can do both at
-% the same time: it achieves very high performance for all kinds of problems. It also clearly outperforms GABIL in terms
-% of learning variability. Its smooth learning curve indicates low variability in performance, while the broken curve of
+% the same time: it achieves very high performance for all kinds of problems. It also clearly outperforms GABIL in
+% terms
+% of learning variability. Its smooth learning curve indicates low variability in performance, while the broken curve
+% of
 % GABIL indicates bigger differences from run to run. Moreover, GIL produced descriptions of much lower complexity.
 
 
