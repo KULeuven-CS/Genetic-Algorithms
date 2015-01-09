@@ -16,15 +16,62 @@ competitive with ID5R as the target concept increases in complexity.
 
 \subsection{Introduction}
 
+There is a misconception that GAs are primarily useful for non-symbolic learning. This is the historical result of
+their heavy use for complex parameter optimizations.
+
 \subsection{Supervised Concept Learning Problems}
+Supervised concept learning involves inducing concept descriptions from a set of examples of a target concept. Concepts
+are represented as subsets of points in an n-dimensional feature space which is defined a priori and for which all the
+legal values of the features are known.
+
+\begin{itemize}
+	\item The concept description language must be sufficiently expressive to describe arbitrarily
+	complex subsets of a feature space. The two language forms generally used are \textbf{decision trees} and
+	\textbf{rules}.
+	\item Possibly, there are infinitely many descriptions consistent with a particular set of example. This is
+	resolved with \textbf{bias} toward certain kinds of representations.
+	\item Evaluation and comparison of concept learners is ruled by two approaches: \textbf{batch mode} and
+	\textbf{incremental mode}. The latter requires a concept description from the examples seen so far, while the
+	former only requires a description when all have been seen.
+\end{itemize}
 
 \subsection{Genetic Algorithms and Concept Learning}
+In order to apply GAs to a particular problem, we need to select an internal representation of the space to be searched
+and define an external evaluation function which assigns utility to candidate solutions.
 
 \subsubsection{Representing the Search Space}
 
+Concept description are generally symbolic in nature, have both syntactic and semantic constraints and vary in length.
+A traditional fixed-length representation, although theoretically well supported, seems not well suited. Two solutions
+exist: changing the GA operators or construct a string representation minimizing any changes to the GA operators
+without them useless. The latter approach is chosen.
+
 \subsubsection{Defining Fixed-length Classifier Rules}
 
+Having chosen for a representation that minimizes the standard operators, the concept description language needs to be chosen carefully. A disjunctive set of classification rules (DNF) is a natural way to do so.
+
+\[
+\text{IF} \{ \text{conjunction of test involving feature values} \} \text{THEN} \{ \text{rule indicating concept} \}
+\]
+
+Since the left-hand sides are conjunctive forms with internal disjunction, there is no loss of generality by requiring
+that there be at most one test for each feature (on the left hand side of a rule).
+\\\\
+Each fixed-length rule will have N feature tests, one for each feature. Nominal features with $k$ values use $k$ bits,
+one for each value. The right-hand side of a rule is simply the class (concept) to which the example belongs. This
+means that our ``classifier system'' is a ``stimulus-response'' system with no internal memory.
+
+
 \subsubsection{Evolving Sets of Classifier Rules}
+Since a concept description will consist of one or more classifier rules, we still need to specify how GAs will be used
+to evolve sets of rules. There are two basic strategies: the Michigan approach and the Pittsburgh approach. The latter
+is chosen so that , each individual in the population is a variable length string representing an unordered set of
+fixed-length rules.
+\\\\
+Crossover can occur anywhere (i.e., both on rule boundaries and within rules). The only requirement is that the
+corresponding crossover points on the two parents ``match up semantically''. That is, if one parent is being cut on a
+rule boundary, then the other parent must be also cut on a rule boundary. The mutation operator is unaffected and
+performs the usual bit-level mutations.
 
 \subsubsection{Choosing a Payoff Function}
 
