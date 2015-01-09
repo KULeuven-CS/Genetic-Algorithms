@@ -101,35 +101,210 @@ search conducted in the artificial representation space, we set the genetic algo
 problem space by organizing the work there.
 
 \subsubsection{Representation and Search Space}
+The multiple-valued logic language $VL_1$ is chosen for chromosome's representation. The search space is the space of
+sets of rules, spanned by given features. It is possible that a these descriptions contain redundant parts. Therefore,
+only formulas built using the sufficient $=$ relation with internal disjunctions is used.
+\\\\
+Because of the assumption of learning only a single concept description, all rules are associated with the same single
+decision.
 
 \subsubsection{Initial Population}
+The population must initially be filled with possible solutions, either randomly generated or incorporating task specific knowledge. This problem to generate a initialization that produces actual solutions is as hard as the one we're trying to solve. A compromise between the two uses three different types:
+
+\begin{enumerate}
+	\item \textbf{Random:} Each individual is a set of a random number of complexes, randomly generated on the search
+	space.
+	\item \textbf{Data:} Each individual is a random positive training event.
+	\item \textbf{Hypotheses:} Each individual is just a single hypothesis given a priori.
+\end{enumerate}
+
+Actual experiments show that the best average behavior is obtained while using a combination of these three.
 
 \subsubsection{Evaluation Mechanism}
+The evaluation function must reflect the learning criteria. In supervised learning from examples, the criteria include
+completeness, consistency. Both are measured with respect to the set of training events.These two measures are
+meaningful only to rule sets and individual rules. For conditions, the measures of the parent rule are used.
 
-\subsubsection{Algorithm}
+\begin{equation}
+\text{correctness} = \frac{w_1 \cdot \text{completeness} + w_2 \cdot \text{correctness}}{w_1 + w_2}
+\end{equation}
+\begin{equation}
+	\text{evaluation} = \text{correctness} \cdot (1 + w_2 \cdot (1-cost))^f
+\end{equation}
+Here the cost is normalized on $[0,1]$ and $f$ grows very slowly on $[0,1]$ as the population ages. The effect of the
+very slowly raising f is that initially the cost influence is very light in order to promote wider space exploration,
+and it only increases at later stages in order to minimize complexity. The third criteria is complexity, which is given
+by the formula below.
+\begin{equation}
+	\text{complexity} = 2 \cdot \text{\#rules} + \text{\#conditions}
+\end{equation}
+
+\subsubsection{Operators}
+Accordingly to the three syntactic levels of the rule-based framework (conditions, rules, rule sets), we divide the
+operators into three corresponding groups. In addition, each operator is classified as having either generalizing,
+specializing, or unspecified -- or independent -- behaviors.
+
+\paragraph{Rule Set Level} This is the level of sets of $VL_1$ complexes. The operators act on whole rule sets.
+
+\begin{itemize}
+	\item \textbf{Independent}
+	\begin{itemize}
+		\item \textbf{Rules Exchange:} This operator requires two parent rule sets, and it exchanges random rules
+		between these two. It requires two parameters: probability of application to a rule set, and probability of
+		rules selection for the exchange.
+	\end{itemize}
+	\item \textbf{Generalization}
+	\begin{itemize}
+		\item \textbf{Rules Copy:} This operator requires two parent rule sets, and it copies a random rule from each
+		of the sets to the other. It differs from the ``rules exchange'' operator, since it does not remove information
+		being propagated from the rule set. It requires one parameter: probability of application to a rule set.
+		\item \textbf{New Event:} This operator acts on a single rule set: if there is a positive event not covered yet
+		by the current rule set, this event's description is added to the set as a new rule. Its actions have very
+		little computational overhead.
+		\item \textbf{Rules Generalization:} This operator selects two random rules and replaces them by their most
+specific generalization.
+	\end{itemize}
+	\item \textbf{Specialization}
+	\begin{itemize}
+		\item \textbf{Rules Drop:} This operator drops a random rule from that set.
+		\item \textbf{Rules Specialization:} This operator replaces two random rules
+		by their most general specialization.
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Rule Level} This the level of $VL_1$ complexes. Operators act on one rule at a time.
+
+\begin{itemize}
+	\item \textbf{Independent}
+	\begin{itemize}
+		\item \textbf{Rule Split:} This operator acts on a single rule, and it splits it into a number of rules,
+		according to a partition of the values of a condition. The set of domain values present in the selected
+		condition can be split according to each value individually or according to two disjoint subsets of values.
+	\end{itemize}
+	\item \textbf{Generalization}
+	\begin{itemize}
+		\item \textbf{Condition Drop:} This operator acts on a single rule, and it removes a present condition from
+		that rule.
+		\item \textbf{Conjunction $\rightarrow$ Disjunction:} This operator acts on a single rule, and it splits the
+		complex into a disjunction where the complex' separation into n and m selectors is random and position
+		independent.
+	\end{itemize}
+	\item \textbf{Specialization}
+	\begin{itemize}
+		\item \textbf{Condition Introduction:} This operator introduces a random condition associated with an
+		unconditioned attribute. The new selector is a random choice from among all of its possible internal
+		disjunctions.
+		\item \textbf{Rule Directed Split:}  This operator acts on a single rule. If this rule covers a negative event,
+		it is split into a set of maximally general rules that are yet consistent with that event.
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Condition Level} This the level of $VL_1$ selector. Operators act on one condition at a time.
+
+\begin{itemize}
+	\item \textbf{Independent}
+	\begin{itemize}
+		\item \textbf{Reference Change:} This operator randomly removes or adds a single domain value to this
+		condition.
+	\end{itemize}
+	\item \textbf{Generalization}
+		\begin{itemize}
+		\item \textbf{Reference Extension:} This extends the domain by allowing a number of additional values.
+	\end{itemize}
+	\item \textbf{Specialization}
+	\begin{itemize}
+		\item \textbf{Reference Restriction:} This operator removes some domain values from this condition.
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Operator Selection Probability}
+Each operator is given some initial probabilities from two separate groups: selection and application probabilities.
+The selection probabilities serve to select one of a number of possible actions and are static. The application probabilities server to fire operators for structures of their type and have a dynamic character.
+
+\begin{itemize}
+	\item Probabilities of generalizing operators are increased for applications to structures (rule sets, rules,
+	conditions) that are incomplete, and are decreased for those that are inconsistent.
+	\item Probabilities of specializing operators are increased for applications to structures that are inconsistent,
+	and decreased for those that are incomplete.
+	\item
+\end{itemize}
+
+These two measures server as an additional heuristic to the fitness. The new value $p'$ is the adjusted probability, and $p$ is the actual probability. The value of $p'$ is computed differently for each rule and rule set.
+
+\begin{equation}
+	\text{Generalizing operators:} p' = p \cdot \left( \frac{3}{2} - \text{completeness} \right) \cdot \left( \frac{1}{2} + \text{consistency} \right)
+\end{equation}
+
+\begin{equation}
+	\text{Specializing operators:} p' = p \cdot \left( \frac{1}{2} + \text{completeness} \right) \cdot \left( \frac{3}{2} - \text{consistency} \right)
+\end{equation}
 
 \subsection{Implementation Issues}
 
+A prototype was implemented in C, named GIL (for Genetic-Based Inductive Learning).
+
 \subsubsection{Sampling Mechanism}
+
+GIL uses use the stochastic universal sampling mechanism. Here, a roulette wheel is constructed for chromosomes with a portion allocated proportionally to its fitness. Another wheel is constructed with equally spaced marks. The wheels are spun against each other. A chromosome is selected once for each mark landing in its allocated space.
 
 \subsubsection{Internal Representation}
 
+Based on GABIL, GIL uses  binary digits to represent domain values and removes both invalid and empty rules. A complex
+is represented by a vector of conditions. Furthermore, for simplicity and efficiency, we associate a fixed positional
+correspondence between the attributes of the vector. A problem arises with representing unrestricted selectors, but
+they can be dropped from its complex without any semantic change to the rule associated with this complex.
+
 \subsubsection{Data Compilation}
+A commonly cited disadvantage of GA is their time complexity. It is especially visible when the evaluation requires
+extensive computation. Therefore, a special method of data compilation was designed. Rather than storing data in terms
+of features, store features in terms of data coverage. For each possible feature, retain information about the events
+covered by this feature. This must be done separately for each concept, and even for concepts not being learned. We
+achieve this by enumerating all learning events and constructing binary coverage vectors. In this vector, a binary one
+at position n indicates that the structure that owns this coverage vector covers event \#n. Prior to learning, as
+mentioned, all data are pre-compiled into such vectors, for all possible features.
 
-\subsection{Experiment Studies}
+% \subsection{Experiment Studies}
 
-\subsubsection{Experimental Methodology}
+% \subsubsection{Experimental Methodology}
 
-\subsubsection{Emerald's Robot World}
+% \subsubsection{Emerald's Robot World}
 
-\subsubsection{DNS Concepts}
+% \subsubsection{DNS Concepts}
+% Learning DNF descriptions has become a standard way of evaluating different systems. GIL is compared with GABIL and
+% ID5R, a decision-tree-based algorithm for supervised concept learning. The latter can be updated incrementally while
+% GABIL needs to start from scratch.
+% \\\\
+% The original claim of the GABIL system was that it could not learn as well as ID5R on simple concepts, but achieved
+% about the same levels of performance as the concepts' complexity increased. Our results show that GIL can do both at
+% the same time: it achieves very high performance for all kinds of problems. It also clearly outperforms GABIL in terms
+% of learning variability. Its smooth learning curve indicates low variability in performance, while the broken curve of
+% GABIL indicates bigger differences from run to run. Moreover, GIL produced descriptions of much lower complexity.
 
-\subsubsection{Multiplexers}
 
-\subsubsection{Breast Cancer}
+% \subsubsection{Multiplexers}
+% Each multiplexer is actually
+% a specific case of the more general DNF.
 
-\subsubsection{Incremental Learning}
+% \subsubsection{Breast Cancer}
+
+% \subsubsection{Incremental Learning}
 
 \subsection{Conclusion}
+This work introduces a novel approach to full-memory, supervised inductive learning in attribute-based spaces that uses
+a knowledge-intensive genetic algorithm. Such an algorithm follows the ideas of traditional GAs, but replaces the
+domain-independent search by a search specific to the inductive learning methodology. This approach represents an
+abstraction of the traditional genetic algorithm to the symbolic level. Initial results show that GAs can be
+successfully applied to more complex, non-numerical tasks by defining the algorithm at the conceptual level of the
+problem. This allows for processing high-level structures using the problem-specific methodology and rich heuristics.
+Moreover, such an abstract view provides for the same clear separation of different systems' components as found in AI
+production systems. This modularity, in turn, allows for transparent applications of similar designs to other domains.
+Some of the most interesting properties of this approach are the clearly understood processing mechanisms, defined on
+the same language as that of input/output, and the low complexity of the generated knowledge. This complexity, measured
+here by number of rules and conditions, contributes to the higher comprehensibility of the output.
+\\\\
+The GA approach is not intended to compete with existing symbolic systems in terms of time complexity. However, GA's
+are naturally suited for parallelization. Additionally, the current complexity, as well as the overall quality, seems
+to be unstable and to vary among different problems, different parameters used, and even different runs of the same
+experiment.
 
 \end{document}
