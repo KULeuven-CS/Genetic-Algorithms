@@ -23,19 +23,82 @@ powerful tool enabling study of the widely accepted but not so well understood i
 
 \subsection{Introduction}
 
-\subsection{Genetic Algortihms}
+With a growing amount of information, knowledge-extraction capabilities have become very important in order to understand the world. Machine learning is an attempt to solve this problem. There are two main groups of approaches:
+
+\begin{itemize}
+	\item \textbf{Non-Symbolic:} Non-symbolic, inductive learning systems, also called subsymbolic, do not acquire explicit knowledge but gather other information necessary for the descriptive model. An example are \emph{statistical models}. All non-symbolic appraoches process low-level entities (usually numerical parameters).
+	\item \textbf{Symbolic:}  Symbolic systems produce knowledge in a high-level descriptive language. Mechanisms based on symbol manipulation, in addition to being closely related to their objectives, allow for the use of the same input and output language.
+\end{itemize}
+
+Genetic algorithms have been successfully applied to a number of problems. It can and has be used as an approach to
+supervised learning. This work follows a different approach than earlier work: rather than trying to extend the set of
+operators, we start with a set of inference rules specific to the task, and incorporate them into the genetic algorithm
+framework. This leads to a  task-specific problem-solving methodology and abstract the genetic algorithm's inference to
+the problem-specific symbol level. This is a knowledge-intensive approach, because it uses a vast amount of task-specific information in the genetic operations.
 
 \subsection{Inductive Learning From Examples}
+Concept learning is a fundamental cognitive process that involves learning descriptions
+of some categories of objects.  Learning is said to be attributed-based when objects are described by features (attribute-value pairs). Learning is supervised when examples are pre-classified as belonging to a space.
+\\\\
+When learning concepts, a mechanism is needed to account for possible cases of no-match and multiple-match when
+recognizing new events. The initial design assumes that the subspace not covered by the description is the complement
+of the concept.
+\\\\
+The definition of the input- and output language is an important issue. The input language is an interface between the environment and the system, and therefore should combine the requirements of both. The output language on the other hand has to combine the requirements of the system and the application environment.
+\\\\
+The language $VL_1$ is used. Variables (attributes) are the basic units, having multivalued domains. According to the relationship among different domain values, such domains may be of different types: nominal, linear or structured with partially ordered values. relations associate variables with their values by means of selectors with natural semantics.
+\\\\
+There are two approaches to learning from examples: one approach assumes a working memory that can remember all previously seen examples (\textbf{Full Memory Learning}) while the other assumes that memory is only available for generated knowledge. Incremental learning is associated with previously generated knowledge and previously seen examples. It is an important characteristic because it mimics human learning and because learning systems frequently display dynamic properties where evidence becomes available from time to time.
+
 
 \subsection{Previous Approaches}
 
 \subsubsection{Traditional Approaches}
+Statistical approaches account for the vast majority of non-symbolic, or numerical, approaches. The disadvantage of
+these approaches is that they rely on low-level processing for high-level learning. Examples are \textbf{Bayesian} and \textbf{Neural Network} methods. The fact that this approach perform numerical computations leads to an
+apparent advantage of better applicability to processing noisy information.
+
+The two prominent symbolic approaches to supervised feature-based learning, recognized
+as benchmarks, both of which are full-memory systems.
+
+\begin{itemize}
+	\item \textbf{Michalski's AQ} \\
+	AQ is based on inductive generalization and specialization of the$VL_1$ formulas using the idea of a cover of the
+	positive against the negative events. This approach conceptually follows the ideas of inductive methodology, since
+	the generated knowledge is either generalized or specialized.
+	\item \textbf{Quinlan's  ID} \\
+	With AD, training examples are represented by feature vectors similar to events in $VL_1$.  The algorithm
+	constructs a decision tree, where each leaf is associated with a single decision class and each internal node
+	corresponds to an attribute while each node's branches correspond to a value of that attribute.
+\end{itemize}
 
 \subsubsection{GA Approaches}
+Because a rule-based concept representation means that the number of such rules (disjuncts) is not known a priori,  the
+traditional fixed-length representation is unsuitable. Two different approaches have been proposed:
+
+\begin{itemize}
+	\item \textbf{Michigan Approach} \\
+	the population still consists of fixed-length elements, but the solution is represented by a set of chromosomes
+	from the population.
+	\item \textbf{Pittsburgh Approach} \\
+	Here, variable-length chromosomes are used to represent proposed solutions individually. For supervised learning, tis would mean each chromosome represents an independent solution.
+\end{itemize}
+
+With very few exceptions all systems for rule-based learning use a three-symbol alphabet $\{0, 1, \#\}$. it is not so well suited for non-binary domains because it increases the representation length. The approach used in this work is to model closely the non-redundant and feasible only representation of $VL_1$.
 
 \subsection{The Modified GA}
 
 \subsubsection{Ideas}
+The need for problem-specific knowledge incorporation into GAs was recognized as a method for improvement in many
+different domains. Following the Pittsburgh approach, the spectrum of GA designs ranges from classical operations to a knowledge-intensive approach with where operators follow a specific problem-solving methodology. The problem with the latter is the lack of a theoretical foundation and that it is more distant from nature.
+\\\\
+All operations in this work are special cases of the traditional operators. This provides an intuitive support for the
+same theoretical foundations. Also, because the operators are defined on the semantic pieces of the problem, one may
+easily argue that this design naturally satisfies the building-block hypothesis as well.
+\\\\
+In conclusion, while applications of the traditional domain-independent operators provide for a domain-independent
+search conducted in the artificial representation space, we set the genetic algorithm to operate directly in the
+problem space by organizing the work there.
 
 \subsubsection{Representation and Search Space}
 
