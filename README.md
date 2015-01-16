@@ -3,6 +3,13 @@ Genetic Algorithms
 
 [Genetic Algorithms and Evolutionary Computing (B-KUL-H02D1A)](https://onderwijsaanbod.kuleuven.be/syllabi/e/H02D1AE.htm)
 
+## PDF
+
+[![PDF Status](https://www.sharelatex.com/github/repos/KULeuven-CS/Genetic-Algorithms/builds/latest/badge.svg)](https://www.sharelatex.com/github/repos/KULeuven-CS/Genetic-Algorithms/builds/latest/output.pdf)
+
+Please **star** this repository if you found its content useful!
+
+This document comes as is, without any warranties. 
 
 ## Papers
 
