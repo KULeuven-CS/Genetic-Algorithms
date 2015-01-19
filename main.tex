@@ -1,4 +1,4 @@
-\documentclass[a4paper, 10pt, oneside]{article}
+\documentclass[a4paper, 10pt, oneside]{memoir}
 
 % Essentials
 \usepackage[utf8]{inputenc}
@@ -26,14 +26,11 @@
 \usepackage{mdframed}
 \usepackage{csquotes}
 \usepackage[table]{xcolor}
-\usepackage{fancyhdr}
 \usepackage{titling}
 
-% Fancy Header
-\pagestyle{fancy}
-\fancyhead[L]{\leftmark}
-\fancyhead[R]{\thepage}
-\fancyfoot{}
+% Memoir
+\setcounter{secnumdepth}{3}
+
 
 % Indentation
 \setlength\parindent{0pt}
@@ -48,6 +45,12 @@
 \newtheorem{ex}{Example}[subsection]
 \newtheorem{experiment}{Experiment}[subsection]
 
+% Question item
+\newcommand{\question}[2]{%
+    \item {\textbf{#1}} \vspace{0.5em} \\  \textit{#2}
+}
+\newcommand{\unanswered}{\vspace{10em}}
+
 \begin{document}
 
 % Title page
@@ -59,9 +62,11 @@
 \newpage
 
 % Main Matter
-\section*{Foreword}
 
-This document summarizes the papers that are part of the course \emph{Genetic Algorithms and Evolutionary
+\part{Summaries}
+
+\chapter*{Foreword}
+This chapter summarizes the papers that are part of the course \emph{Genetic Algorithms and Evolutionary
 Computing}\footnote{\url{https://onderwijsaanbod.kuleuven.be/syllabi/e/H02D1AE.htm}} at the University of Leuven. The
 reader is assumed to have a basic understanding of genetic algorithms. Many papers, especially the older ones, tend to
 reintroduce the concept. These sections have been omitted. Sections containing results have either been omitted or
@@ -72,29 +77,39 @@ copied verbatim from the original paper. I do not claim this document provides a
 engineer, I have little knowledge of the law regarding copyright. I'm assuming this work falls under the ``fair use''
 or equivalent policy.
 
-\section{Evolving Inventions}
+
+\chapter{Evolving Inventions}
 \subfile{subfiles/evolving_inventions.tex}
 
-\section{Genetic Algorithms, Constraints, and the Knapsack Problem}
+\chapter{Genetic Algorithms, Constraints, and the Knapsack Problem}
 \subfile{subfiles/knapsack.tex}
 
-\section{Evolving 3D Morphology and Behavior by Competition}
+\chapter{Evolving 3D Morphology and Behavior by Competition}
 \subfile{subfiles/evolving_morphologie.tex}
 
-\section{Evolution of Adaptive Behavior in Robots}
+\chapter{Evolution of Adaptive Behavior in Robots}
 \subfile{subfiles/adaptive_robots.tex}
 
-\section{A Knowledge-Intensive GA for Supervised Learning}
+\chapter{A Knowledge-Intensive GA for Supervised Learning}
 \subfile{subfiles/knowledge_intensive_ga.tex}
 
-\section{Using GA For Supervised Concept Learning}
+\chapter{Using GA For Supervised Concept Learning}
 \subfile{subfiles/supervised_concept_learning.tex}
 
-\section{Optimization of Control Parameters for Genetic Algorithms}
+\chapter{Optimization of Control Parameters for Genetic Algorithms}
 \subfile{subfiles/optimization_control_paramters.tex}
 
-\section{Maintaining Healthy Population Diversity}
+\chapter{Maintaining Healthy Population Diversity}
 \subfile{subfiles/healthy_population_diversity.tex}
+
+\part{Study Material}
+
+\chapter{TSP}
+\subfile{subfiles/tsp.tex}
+
+\chapter{Questions}
+\subfile{subfiles/questions.tex}
+
 
 % Appendix
 \newpage

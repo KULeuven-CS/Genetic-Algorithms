@@ -1,0 +1,106 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section{Adjacency Representation}
+With the adjacency representation, a tour is represented as a list of $n$ cities where city $j$ is listed in position $i$ $\Leftrightarrow$ the tour leads from city $i$ to city $j$. This representation is unique but may represent illegal tours.
+
+\subsection{Alternation Edge Crossover}
+
+An edge is chosen at random from the first parent. The tour is created by extending the partial tour with the appropriate edge from the other parent. This repeated until the tour is complete. If the chosen edge would produce a cycle, another edge is chosen that would prevent this.
+
+\subsection{Subtour Chunck Crossover}
+
+This operator is similar to the alternating edge crossover operator but alternates chuncks of subtours rather than edges. A random subtour is chosen from the first parent. The partial tour is extended by choosing a subtour of random length from the other parent. If the subtour would result in an illegal tour, an edge is chosen randomly from the edges that would not produce a subtour.
+
+\subsection{Heuristic Crossover}
+
+The heuristic crossover starts by selecting a random city. The edges connected to this city are compared and the shorten one is chosen. This step is repeated for the city on the other end of the chosen edge. If an edge would lead to a cycle, an edge is chosen from those that would not cause a cycle.
+
+\section{Ordinal Representation}
+
+The ordinal representation is given as the position (index) of the city in an ordered list $L$. After obtaining the position of a city, it is removed from the list. The representation has the advantage of always representing valid subtours.
+Given the list $L$:
+\[
+L = (1 ~ 2 ~ 3 ~ 4 ~ 5 ~ 6 ~ 7)
+\]
+Given the tour:
+\[
+1 - 2 -7 -5 -6 -3-4
+\]
+The ordinal representation then becomes:
+\[
+T = (1 ~ 1 ~ 5 ~ 3 ~ 3 ~ 1 ~ 1)
+\]
+
+The explanation goes as follows: initially city 1 is at position 1 of $L$. With this city removed, $L = (2 ~ 3 ~ 4 ~ 5 ~ 6 ~ 7)$. With the new $L$, city 2 is at index 1. Now $L = (3 ~ 4 ~ 5 ~ 6 ~ 7)$. Here, city 7 is located at index 5. Because at the last stage the length of $L$ is always one, the last position in $T$ is always 1.
+
+\section{Path Representation}
+
+The path representation is the most natural: it represents connected cities next to each other. The resulting representation is not unique however.
+
+\subsection{PMX: Partially Matched Crossover}
+The operator preserves the position of cities rather than their ordering.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        a & b & c & d & d &\cellcolor{black!15}f & \cellcolor{black!15}g & \cellcolor{black!15}h & i & j \\ \hline
+        c & f & g & a & j &\cellcolor{black!25}b & \cellcolor{black!25}d & \cellcolor{black!25}i & e & h \\ \hline
+      \hline
+        c & \cellcolor{black!25}b & \cellcolor{black!25}d & a & j &\cellcolor{black!15}f & \cellcolor{black!15}g & \cellcolor{black!15}h & e & \cellcolor{black!25}i \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{OX: Order Crossover}
+The selected cities from the first parent's tour segment are canceled from the second parent and the cities from the second parent are shifted to make space for the first parent's subtour.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        a & b & c & d & d &\cellcolor{black!15}f & \cellcolor{black!15}g & \cellcolor{black!15}h & i & j \\ \hline
+        c &\cellcolor{black!5}f &\cellcolor{black!5}g & a & j & b & d & i & e & \cellcolor{black!5}h \\ \hline
+      \hline
+        c & a & j & b & d &\cellcolor{black!15}f & \cellcolor{black!15}g & \cellcolor{black!15}h & i & e \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{CX: Cyclic Crossover}
+The operator creates offspring where every position is occupied by a corresponding element from one of the parents.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \cellcolor{black!25}a & b & \cellcolor{black!10}c & \cellcolor{black!10}d & d & f & \cellcolor{black!10}g & h & i & j \\ \hline
+        \cellcolor{black!10}c & f & \cellcolor{black!10}g & a & h & b & \cellcolor{black!10}d & i & e & j \\ \hline
+        \hline
+        \cellcolor{black!10}a & f & \cellcolor{black!10}c & \cellcolor{black!10}d & h & b & \cellcolor{black!10}g & i & e & j \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{ERX: Edge Recombination Crossover}
+Choose an initial city as the current city. While the are unvisited cities remaining, remove occurences of the current city from the edges list. Take the city in the edge list of the current city with the fewest entities in it's edge list. Ties are broken at random.
+\\\\
+The edge list for parents $(1 ~ 2 ~ 3 ~ 4 ~ 5 ~ 6 ~ 7 ~ 8 ~ 9)$ and $(4 ~ 1 ~ 2 ~ 8 ~ 7 ~ 6 ~ 9 ~ 3 ~ 5)$ is given below.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+    \toprule
+    City & Connected Cities \\
+    \midrule
+    1 & 9,2,4 \\
+    2 & 1,3,8 \\
+    3 & 2,4,9,5 \\
+    4 & 3,5,1 \\
+    5 & 4,6,3 \\
+    6 & 5,9,7 \\
+    7 & 6,8 \\
+    8 & 7,9,2 \\
+    9 & 8,1,6,3 \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+City is connected to 2 and 9 in the first parent and 4 and 2 in the second. From the entities in the first city's edge list, both 2 and 4 have both 2 entities in their edge list (the current city is removed from their edge list) while 9 has 3. Tie is broken at random resulting in city 4. The final offspring is $(1 ~ 4 ~5 ~6 ~7 ~8 ~2 ~3 ~9)$.
+
+\end{document}

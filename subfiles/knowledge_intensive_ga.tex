@@ -2,10 +2,6 @@
 
 \begin{document}
 
-\begin{mdframed}
-\fullcite{Janikow}
-\end{mdframed}
-
 \begin{abstract}
 Supervised learning in attribute-based spaces is one of the most popular machine learning problems studied and,
 consequently, has attracted considerable attention of the genetic algorithm community. The fullmemory approach
@@ -21,7 +17,11 @@ algorithm methods with traditional problem-solving methodologies. Moreover, in t
 powerful tool enabling study of the widely accepted but not so well understood inductive learning methodology.
 \end{abstract}
 
-\subsection{Introduction}
+\begin{mdframed}
+\fullcite{Janikow}
+\end{mdframed}
+
+\section{Introduction}
 
 With a growing amount of information, knowledge-extraction capabilities have become very important in order to
 understand the world. Machine learning is an attempt to solve this problem. There are two main groups of approaches:
@@ -42,7 +42,7 @@ framework. This leads to a  task-specific problem-solving methodology and abstra
 the problem-specific symbol level. This is a knowledge-intensive approach, because it uses a vast amount of task-
 specific information in the genetic operations.
 
-\subsection{Inductive Learning From Examples}
+\section{Inductive Learning From Examples}
 Concept learning is a fundamental cognitive process that involves learning descriptions
 of some categories of objects.  Learning is said to be attributed-based when objects are described by features
 (attribute-value pairs). Learning is supervised when examples are pre-classified as belonging to a space.
@@ -66,9 +66,9 @@ examples. It is an important characteristic because it mimics human learning and
 display dynamic properties where evidence becomes available from time to time.
 
 
-\subsection{Previous Approaches}
+\section{Previous Approaches}
 
-\subsubsection{Traditional Approaches}
+\subsection{Traditional Approaches}
 Statistical approaches account for the vast majority of non-symbolic, or numerical, approaches. The disadvantage of
 these approaches is that they rely on low-level processing for high-level learning. Examples are \textbf{Bayesian} and
 \textbf{Neural Network} methods. The fact that this approach perform numerical computations leads to an
@@ -88,7 +88,7 @@ as benchmarks, both of which are full-memory systems.
 	corresponds to an attribute while each node's branches correspond to a value of that attribute.
 \end{itemize}
 
-\subsubsection{GA Approaches}
+\subsection{GA Approaches}
 Because a rule-based concept representation means that the number of such rules (disjuncts) is not known a priori,  the
 traditional fixed-length representation is unsuitable. Two different approaches have been proposed:
 
@@ -105,9 +105,9 @@ With very few exceptions all systems for rule-based learning use a three-symbol 
 well suited for non-binary domains because it increases the representation length. The approach used in this work is to
 model closely the non-redundant and feasible only representation of $VL_1$.
 
-\subsection{The Modified GA}
+\section{The Modified GA}
 
-\subsubsection{Ideas}
+\subsection{Ideas}
 The need for problem-specific knowledge incorporation into GAs was recognized as a method for improvement in many
 different domains. Following the Pittsburgh approach, the spectrum of GA designs ranges from classical operations to a
 knowledge-intensive approach with where operators follow a specific problem-solving methodology. The problem with the
@@ -121,7 +121,7 @@ In conclusion, while applications of the traditional domain-independent operator
 search conducted in the artificial representation space, we set the genetic algorithm to operate directly in the
 problem space by organizing the work there.
 
-\subsubsection{Representation and Search Space}
+\subsection{Representation and Search Space}
 The multiple-valued logic language $VL_1$ is chosen for chromosome's representation. The search space is the space of
 sets of rules, spanned by given features. It is possible that a these descriptions contain redundant parts. Therefore,
 only formulas built using the sufficient $=$ relation with internal disjunctions is used.
@@ -129,7 +129,7 @@ only formulas built using the sufficient $=$ relation with internal disjunctions
 Because of the assumption of learning only a single concept description, all rules are associated with the same single
 decision.
 
-\subsubsection{Initial Population}
+\subsection{Initial Population}
 The population must initially be filled with possible solutions, either randomly generated or incorporating task
 specific knowledge. This problem to generate a initialization that produces actual solutions is as hard as the one
 we're trying to solve. A compromise between the two uses three different types:
@@ -143,7 +143,7 @@ we're trying to solve. A compromise between the two uses three different types:
 
 Actual experiments show that the best average behavior is obtained while using a combination of these three.
 
-\subsubsection{Evaluation Mechanism}
+\subsection{Evaluation Mechanism}
 The evaluation function must reflect the learning criteria. In supervised learning from examples, the criteria include
 completeness, consistency. Both are measured with respect to the set of training events.These two measures are
 meaningful only to rule sets and individual rules. For conditions, the measures of the parent rule are used.
@@ -162,12 +162,12 @@ by the formula below.
 	\text{complexity} = 2 \cdot \text{\#rules} + \text{\#conditions}
 \end{equation}
 
-\subsubsection{Operators}
+\subsection{Operators}
 Accordingly to the three syntactic levels of the rule-based framework (conditions, rules, rule sets), we divide the
 operators into three corresponding groups. In addition, each operator is classified as having either generalizing,
 specializing, or unspecified -- or independent -- behaviors.
 
-\paragraph{Rule Set Level} This is the level of sets of $VL_1$ complexes. The operators act on whole rule sets.
+\subsubsection{Rule Set Level} This is the level of sets of $VL_1$ complexes. The operators act on whole rule sets.
 
 \begin{itemize}
 	\item \textbf{Independent}
@@ -195,7 +195,7 @@ specific generalization.
 	\end{itemize}
 \end{itemize}
 
-\paragraph{Rule Level} This the level of $VL_1$ complexes. Operators act on one rule at a time.
+\subsubsection{Rule Level} This the level of $VL_1$ complexes. Operators act on one rule at a time.
 
 \begin{itemize}
 	\item \textbf{Independent}
@@ -222,7 +222,7 @@ specific generalization.
 	\end{itemize}
 \end{itemize}
 
-\paragraph{Condition Level} This the level of $VL_1$ selector. Operators act on one condition at a time.
+\subsubsection{Condition Level} This the level of $VL_1$ selector. Operators act on one condition at a time.
 
 \begin{itemize}
 	\item \textbf{Independent}
@@ -240,7 +240,7 @@ specific generalization.
 	\end{itemize}
 \end{itemize}
 
-\paragraph{Operator Selection Probability}
+\subsubsection{Operator Selection Probability}
 Each operator is given some initial probabilities from two separate groups: selection and application probabilities.
 The selection probabilities serve to select one of a number of possible actions and are static. The application
 probabilities server to fire operators for structures of their type and have a dynamic character.
@@ -266,24 +266,24 @@ and $p$ is the actual probability. The value of $p'$ is computed differently for
 	\frac{3}{2} - \text{consistency} \right)
 \end{equation}
 
-\subsection{Implementation Issues}
+\section{Implementation Issues}
 
 A prototype was implemented in C, named GIL (for Genetic-Based Inductive Learning).
 
-\subsubsection{Sampling Mechanism}
+\subsection{Sampling Mechanism}
 
 GIL uses use the stochastic universal sampling mechanism. Here, a roulette wheel is constructed for chromosomes with a
 portion allocated proportionally to its fitness. Another wheel is constructed with equally spaced marks. The wheels are
 spun against each other. A chromosome is selected once for each mark landing in its allocated space.
 
-\subsubsection{Internal Representation}
+\subsection{Internal Representation}
 
 Based on GABIL, GIL uses  binary digits to represent domain values and removes both invalid and empty rules. A complex
 is represented by a vector of conditions. Furthermore, for simplicity and efficiency, we associate a fixed positional
 correspondence between the attributes of the vector. A problem arises with representing unrestricted selectors, but
 they can be dropped from its complex without any semantic change to the rule associated with this complex.
 
-\subsubsection{Data Compilation}
+\subsection{Data Compilation}
 A commonly cited disadvantage of GA is their time complexity. It is especially visible when the evaluation requires
 extensive computation. Therefore, a special method of data compilation was designed. Rather than storing data in terms
 of features, store features in terms of data coverage. For each possible feature, retain information about the events
@@ -292,13 +292,13 @@ achieve this by enumerating all learning events and constructing binary coverage
 at position n indicates that the structure that owns this coverage vector covers event \#n. Prior to learning, as
 mentioned, all data are pre-compiled into such vectors, for all possible features.
 
-% \subsection{Experiment Studies}
+% \section{Experiment Studies}
 
-% \subsubsection{Experimental Methodology}
+% \subsection{Experimental Methodology}
 
-% \subsubsection{Emerald's Robot World}
+% \subsection{Emerald's Robot World}
 
-% \subsubsection{DNS Concepts}
+% \subsection{DNS Concepts}
 % Learning DNF descriptions has become a standard way of evaluating different systems. GIL is compared with GABIL and
 % ID5R, a decision-tree-based algorithm for supervised concept learning. The latter can be updated incrementally while
 % GABIL needs to start from scratch.
@@ -312,15 +312,15 @@ mentioned, all data are pre-compiled into such vectors, for all possible feature
 % GABIL indicates bigger differences from run to run. Moreover, GIL produced descriptions of much lower complexity.
 
 
-% \subsubsection{Multiplexers}
+% \subsection{Multiplexers}
 % Each multiplexer is actually
 % a specific case of the more general DNF.
 
-% \subsubsection{Breast Cancer}
+% \subsection{Breast Cancer}
 
-% \subsubsection{Incremental Learning}
+% \subsection{Incremental Learning}
 
-\subsection{Conclusion}
+\section{Conclusion}
 This work introduces a novel approach to full-memory, supervised inductive learning in attribute-based spaces that uses
 a knowledge-intensive genetic algorithm. Such an algorithm follows the ideas of traditional GAs, but replaces the
 domain-independent search by a search specific to the inductive learning methodology. This approach represents an

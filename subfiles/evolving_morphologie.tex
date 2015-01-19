@@ -2,10 +2,6 @@
 
 \begin{document}
 
-\begin{mdframed}
-\fullcite{Sims:1994:EMB:1667943.1667946}
-\end{mdframed}
-
 \begin{abstract}
 This article describes a system for the evolution and co-evolution of virtual creatures that compete in physically
 simulated three-dimensional worlds. Pairs of individuals enter one-on-one contests in which they contend to gain
@@ -19,17 +15,20 @@ structured as directed graphs of nodes and connections, and they can efficiently
 the development of creatures' bodies and control systems with repeating or recursive components. When simulated
 evolutions are performed with populations of competing creatures, interesting and diverse strategies and counter-
 strategies emerge.
-
 \end{abstract}
 
-\subsection{Introduction}
+\begin{mdframed}
+\fullcite{Sims:1994:EMB:1667943.1667946}
+\end{mdframed}
+
+\section{Introduction}
 
 Interactions between evolving organisms are generally believed to have a strong influence on their resulting complexity
 and diversity. The difference between evolution and optimization is the lack of an explicit goal. The hope is that
 virtual creatures with higher complexity and more interesting behavior will evolve than when applying the selection
 pressures of optimization alone.
 
-\subsection{The Contest}
+\section{The Contest}
 
 Creatures compete to gain control of a single cube, placed in the center of the world. Creates start rotated away from
 the cube and under a diagonal plane. This prevent large creates from simply falling over the cube. The fitness is
@@ -37,7 +36,7 @@ determined by the distance from the cube. Additionally, keeping the opponent fur
 fitness. Finally, control over the cube is awarded: if both creatures end up contacting the cube, the winner is the one
 that surrounds it the most.
 
-\subsection{Approximating Competitive Environments}
+\section{Approximating Competitive Environments}
 
 Pairs of individuals compete one-on-one. At every generation of a simulated evolution the individuals in the population
 are paired up by some pattern and a number of competitions are performed to eventually determine a fitness value for
@@ -61,7 +60,7 @@ every individual.
 
 The resulting effects of using these different competition patterns is unfortunately difficult to quantify.
 
-\subsection{Creature Morphology}
+\section{Creature Morphology}
 
 In this work, the phenotype embodiment of a virtual creature is a hierarchy of articulated three-dimensional rigid
 parts. The genetic representation of this morphology is a directed graph of nodes and connections.
@@ -80,12 +79,12 @@ parts. The genetic representation of this morphology is a directed graph of node
 	scale,} and \emph{reflection}.
 \end{itemize}
 
-\subsection{Creature Behavior}
+\section{Creature Behavior}
 
 A virtual ``brain'' determines the behavior of a creature. it accepts sensor values and provides output effector
 values. Sensor, effector, and internal neuron signals are represented by continuously variable scalars.
 
-\subsubsection{Sensors}
+\subsection{Sensors}
 A sensor is contained within a specific part and measures either aspects of that part of the work relative to that
 part.
 
@@ -97,19 +96,19 @@ part.
 	made available, for the light located in the cube and the light located at the center of mass of the opponent.
 \end{enumerate}
 
-\subsubsection{Neurons}
+\subsection{Neurons}
 
 Neurons allow creatures internal state beyond its sensor values. Neural nodes can perform functions on the input to
 genere output signals. The set of functions that neural nodes can have is: \emph{ sum, product, divide, sum-threshold,
 greater-than, sign-of, min, max, abs, if, interpolate, sin, cos, atan, log, expt, sigmoid, integrate, differentiate,
 smooth, memory, oscillatewave,} and \emph{oscillate-saw}.
 
-\subsubsection{Effectors}
+\subsection{Effectors}
 Each effector simply contains a connection from a neuron or a sensor from which to receive a value. It
 controls a degree of freedom of a joint. Additionally, each one is given a maximum-strength proportional to the maximum
 cross sectional area of the two parts it joins.
 
-\subsubsection{Combining Morphology and Control}
+\subsection{Combining Morphology and Control}
 
 Because most of the neural elements exist within a specif part of the creature, the genotype for the nervous system is
 a nested graph: the morphological nodes each contain graphs of the neural nodes and connections. The nodes contain the
@@ -118,13 +117,13 @@ sensors, neurons, and effectors, and the connections define the flow of signals 
 Creatures are also allowed a set of neurons that are not associated with a specific part, and are copied only once into
 the phenotype. This gives the opportunity for the development of global synchronization or centralized control.
 
-\subsection{Physical Simulation}
+\section{Physical Simulation}
 Dynamics simulation is used to calculate the movement of creatures resulting from their interaction with a virtual 3D
 world. The shapes of parts are represented here by simple rectangular solids.  Bounding box hierarchies are used to
 reduce the number of collision tests between parts. Collision response is accomplished by a hybrid model using both
 impulses and penalty spring forces.
 
-\subsection{Creature Evolution}
+\section{Creature Evolution}
 
 An evolution of virtual creatures is begun by creating an initial population of genotypes. These initial creatures are
 either generated from scratch or are an existing genotype from a previous evolution.  Inappropriate creatures are
@@ -133,7 +132,7 @@ generation. Creatures are grown from their genotypes, and their fitness values a
 competitions with other individuals. Offspring are generated from the surviving creatures by copying and combining
 their directed graph genotypes.
 
-\subsubsection{Mutating Directed Graphs}
+\subsection{Mutating Directed Graphs}
 
 \begin{enumerate}
 	\item The internal parameters of each node are subjected to possible alterations.
@@ -143,7 +142,7 @@ their directed graph genotypes.
 	\item Unconnected elements are garbage collected.
 \end{enumerate}
 
-\subsubsection{Mating Directed Graphs}
+\subsection{Mating Directed Graphs}
 
 Sexual reproduction allows components from more than one parent to be combined into new offspring.
 
@@ -156,7 +155,7 @@ Sexual reproduction allows components from more than one parent to be combined i
 	\item \textbf{Asexual:} Here a child is created only by mutation.
 \end{itemize}
 
-\subsection{Results and Discussion}
+\section{Results and Discussion}
 
 A variety of methods for reaching the cube were discovered. Some extended arms out onto the cube, and some reached out
 while falling forward to land on top of it. Others could crawl inch-worm style or roll towards the cube, and a few even
@@ -165,7 +164,7 @@ species discovered methods for reaching the cube and then further evolved strate
 behavior. Most creatures perform similar behavior independently of the opponent's actions, but a few are adaptive in
 that they can reach towards the cube wherever it moves.
 
-\subsection{Conclusion}
+\section{Conclusion}
 
 In summary, a system has been described that can automatically generate autonomous three-dimensional virtual creatures
 that exhibit diverse competitive strategies in physically simulated worlds. A genetic language that uses directed

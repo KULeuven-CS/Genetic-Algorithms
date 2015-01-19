@@ -2,10 +2,6 @@
 
 \begin{document}
 
-\begin{mdframed}
-\fullcite{130359}
-\end{mdframed}
-
 \begin{abstract}
 The authors consider the application of a genetic algorithm (GA) to a symbolic learning task namely, supervised concept
 learning from examples. A GA concept learner, GABL, that learns a concept from a set of positive and negative examples
@@ -14,12 +10,16 @@ ID5R. Preliminary results show that, despite minimal system bias, GABL is an eff
 competitive with ID5R as the target concept increases in complexity.
 \end{abstract}
 
-\subsection{Introduction}
+\begin{mdframed}
+\fullcite{130359}
+\end{mdframed}
+
+\section{Introduction}
 
 There is a misconception that GAs are primarily useful for non-symbolic learning. This is the historical result of
 their heavy use for complex parameter optimizations.
 
-\subsection{Supervised Concept Learning Problems}
+\section{Supervised Concept Learning Problems}
 Supervised concept learning involves inducing concept descriptions from a set of examples of a target concept. Concepts
 are represented as subsets of points in an n-dimensional feature space which is defined a priori and for which all the
 legal values of the features are known.
@@ -35,18 +35,18 @@ legal values of the features are known.
 	former only requires a description when all have been seen.
 \end{itemize}
 
-\subsection{Genetic Algorithms and Concept Learning}
+\section{Genetic Algorithms and Concept Learning}
 In order to apply GAs to a particular problem, we need to select an internal representation of the space to be searched
 and define an external evaluation function which assigns utility to candidate solutions.
 
-\subsubsection{Representing the Search Space}
+\subsection{Representing the Search Space}
 
 Concept description are generally symbolic in nature, have both syntactic and semantic constraints and vary in length.
 A traditional fixed-length representation, although theoretically well supported, seems not well suited. Two solutions
 exist: changing the GA operators or construct a string representation minimizing any changes to the GA operators
 without them useless. The latter approach is chosen.
 
-\subsubsection{Defining Fixed-length Classifier Rules}
+\subsection{Defining Fixed-length Classifier Rules}
 
 Having chosen for a representation that minimizes the standard operators, the concept description language needs to be
 chosen carefully. A disjunctive set of classification rules (DNF) is a natural way to do so.
@@ -63,7 +63,7 @@ one for each value. The right-hand side of a rule is simply the class (concept) 
 means that our ``classifier system'' is a ``stimulus-response'' system with no internal memory.
 
 
-\subsubsection{Evolving Sets of Classifier Rules}
+\subsection{Evolving Sets of Classifier Rules}
 Since a concept description will consist of one or more classifier rules, we still need to specify how GAs will be used
 to evolve sets of rules. There are two basic strategies: the Michigan approach and the Pittsburgh approach. The latter
 is chosen so that , each individual in the population is a variable length string representing an unordered set of
@@ -74,7 +74,7 @@ corresponding crossover points on the two parents ``match up semantically''. Tha
 rule boundary, then the other parent must be also cut on a rule boundary. The mutation operator is unaffected and
 performs the usual bit-level mutations.
 
-\subsubsection{Choosing a Payoff Function}
+\subsection{Choosing a Payoff Function}
 The payoff function is the natural place to centralize and make explicit any biases (preferences) for certain kinds of
 concept descriptions. A payoff function involving only classification performance is chosen. The payoff (fitness) of
 each individual rule set is computed by testing the rule set on the current set of examples and letting:
@@ -86,7 +86,7 @@ each individual rule set is computed by testing the rule set on the current set 
 This provides a non-linear bias toward correctly classifying all the examples while providing differential reward for
 imperfect rule sets.
 
-\subsubsection{The GA Concept Learner}
+\subsection{The GA Concept Learner}
 
 The simplest approach involves using a batch mode in which a fixed set of examples is presented, and the GA must search
 the space of variable-length strings described above for a set of rules which achieves a score of 100\%. We will call
@@ -101,9 +101,9 @@ is simply stored with the previous example and the rule set remains unchanged. A
 accepted, a prediction is made, and the GA is re-run in batch if the prediction is incorrect. We refer to this mode of
 operation as batch-incremental and we refer to the GA batch-incremental concept learner as GABIL.
 
-\subsection{Empirical Studies}
+\section{Empirical Studies}
 
-\subsubsection{Evaluating Concept Learning Programs}
+\subsection{Evaluating Concept Learning Programs}
 
 An incremental concept learner will make a prediction for each new instance seen. Each prediction is either correct or
 incorrect. We are interested in examining how an incremental system changes its predictive performance over time. We
@@ -111,7 +111,7 @@ examine a small window of recent outcomes, counting the correct predictions with
 then be generated which indicate whether a concept learner is getting any better at correctly classifying new (unseen)
 examples
 
-\subsubsection{Initial Experiments}
+\subsection{Initial Experiments}
 
 \begin{itemize}
 	\item Demonstrate the predictive performance of GABIL as a function of incremental increases in the size and
@@ -120,7 +120,7 @@ examples
 	learning algorithm.
 \end{itemize}
 
-\paragraph{ID5R vs GABIL}
+\subsubsection{ID5R vs GABIL}
 
 \begin{itemize}
 	\item ID5R relies upon Quinlan’s information theoretic entropy measure to build its decision trees. This measure
@@ -133,7 +133,7 @@ examples
 Given these biases (and lack of biases), it is natural to expect that while ID5R will outperform GABIL on the simpler
 concepts, there will exist a frontier at which the situation will reverse.
 
-\paragraph{Results}
+\subsubsection{Results}
 
 ID5R’s biases favor concepts that can be represented with small decision trees GABIL does not have these biases, and
 appears to be less sensitive to increasing numbers of disjuncts and conjuncts. GABIL does not degrade significantly
@@ -141,7 +141,7 @@ with increasing target concept complexity and outperforms ID5R on 4 disjunct con
 of a target concept corresponds roughly with the size of its decision tree representation, we expect this trend to
 continue with more difficult target concepts.
 
-\subsection{Conclusion}
+\section{Conclusion}
 
 This paper presents a series of initial results regarding the use of GAs for symbolic learning tasks. In particular, a
 GA-based concept learner is developed and analyzed. It is interesting to note that reasonable performance is achieved

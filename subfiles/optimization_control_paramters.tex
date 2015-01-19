@@ -2,10 +2,6 @@
 
 \begin{document}
 
-\begin{mdframed}
-\fullcite{4075583}
-\end{mdframed}
-
 \begin{abstract}
 The task of optimizing a complex system presents at least two levels of problems for the system designer. First, a
 class of optimization algorithms must be chosen that is suitable for application to the system. Second, various
@@ -15,7 +11,11 @@ level task of identifying efficient GA's for a set of numerical optimization pro
 image registration problem. GA's are shown to be effective for both levels of the systems optimization problem.
 \end{abstract}
 
-\subsection{Introduction}
+\begin{mdframed}
+\fullcite{4075583}
+\end{mdframed}
+
+\section{Introduction}
 
 When considering optimization problems, different techniques can be considered. Often, the choice of parameters that
 must be tuned have a significant impact on the effectiveness of the method. This problem represents a secondary
@@ -25,12 +25,12 @@ The paper describes experiments that search a parametrized space of GA's in orde
 task of optimizing a set of numerical functions. This search is performed by a meta-level GA. It is shown that genetic
 algorithms are suitable for both levels of optimization.
 
-\subsection{Experimental Design}
+\section{Experimental Design}
 The searches for the optimal GA's were performed by GA's. This demonstrates the efficiency and power of GA's as meta-
 level optimization techniques. A meta-level GA could similarly search any other space of parameterized optimization
 procedures.
 
-\subsection{Space of Genetic Algorithms}
+\section{Space of Genetic Algorithms}
 
 This study is limited to a particular subclass of GA's characterized by the following six parameters.
 
@@ -87,13 +87,13 @@ The Cartesian product of the indicated ranges for the six parameters define a sp
 possible to predict how a single parameter will after the performance, assuming all others are kept fixed. Generally,
 it is difficult to predict their interaction.
 
-\subsubsection{Performance Measures}
+\subsection{Performance Measures}
 
 Two performance measures for adaptive search strategies were considered: \textbf{online performance} and
 \textbf{offline performance}. The former is a relevant measure when the search can be performed offline, while the best
 structure so far is used to control the latter.
 
-\subsection{Results}
+\section{Results}
 In summary, the performance of GA's appear to be a nonlinear function of the control parameters. Nevertheless, the
 available data is too limited to confirm or disconfirm the existence of discontinuities or multiple local optima in the
 performance space of GA's.
@@ -111,7 +111,7 @@ performance space of GA's.
 	population size increases.
 \end{itemize}
 
-\subsection{Conclusion}
+\section{Conclusion}
 The experimental data also suggests that, while it is possible to optimize GA control parameters, very good
 performance can be obtained with a range of GA control parameter settings. An alternative approach to the optimization
 of GA's would be to enable the GA to modify its own parameters dynamically
