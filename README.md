@@ -9,7 +9,7 @@ Genetic Algorithms
 
 Please **star** this repository if you found its content useful!
 
-This document comes as is, without any warranties. 
+This document comes as is, without any warranties. The paper size of this document is A5 to allow easy side-by-side printing.
 
 ## Papers
 

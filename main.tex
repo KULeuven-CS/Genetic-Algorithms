@@ -1,11 +1,11 @@
-\documentclass[a4paper, 10pt, oneside]{memoir}
+\documentclass[10pt,twoside]{memoir}
 
 % Essentials
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend=bibtex,style=ieee]{biblatex}
-\usepackage[tmargin=3cm, bmargin=2cm, lmargin=2cm, rmargin=2cm]{geometry}
+\usepackage[a5paper, tmargin=2cm, bmargin=2cm]{geometry}
 \usepackage[backend=bibtex,style=ieee]{biblatex}
 
 % Bibliography
@@ -31,7 +31,6 @@
 % Memoir
 \setcounter{secnumdepth}{3}
 
-
 % Indentation
 \setlength\parindent{0pt}
 
@@ -55,14 +54,14 @@
 
 % Title page
 \maketitle
-\newpage
+
+\frontmatter
 
 % Table of Contents
 \tableofcontents
-\newpage
 
 % Main Matter
-
+\mainmatter
 \part{Summaries}
 
 \chapter*{Foreword}
@@ -79,27 +78,35 @@ or equivalent policy.
 
 
 \chapter{Evolving Inventions}
+\chaptermark{Evolving Inventions}
 \subfile{subfiles/evolving_inventions.tex}
 
 \chapter{Genetic Algorithms, Constraints, and the Knapsack Problem}
+\chaptermark{Knapsack Problem}
 \subfile{subfiles/knapsack.tex}
 
 \chapter{Evolving 3D Morphology and Behavior by Competition}
+\chaptermark{Evolving Morphologies}
 \subfile{subfiles/evolving_morphologie.tex}
 
 \chapter{Evolution of Adaptive Behavior in Robots}
+\chaptermark{Evolving Robots}
 \subfile{subfiles/adaptive_robots.tex}
 
 \chapter{A Knowledge-Intensive GA for Supervised Learning}
+\chaptermark{Supervised Learning 1}
 \subfile{subfiles/knowledge_intensive_ga.tex}
 
 \chapter{Using GA For Supervised Concept Learning}
+\chaptermark{Supervised Learning 2}
 \subfile{subfiles/supervised_concept_learning.tex}
 
 \chapter{Optimization of Control Parameters for Genetic Algorithms}
+\chaptermark{Parameter Optimization}
 \subfile{subfiles/optimization_control_paramters.tex}
 
 \chapter{Maintaining Healthy Population Diversity}
+\chaptermark{Population Diversity}
 \subfile{subfiles/healthy_population_diversity.tex}
 
 \part{Study Material}
@@ -112,7 +119,7 @@ or equivalent policy.
 
 
 % Appendix
-\newpage
+\backmatter
 \appendix
 \printbibliography
 
