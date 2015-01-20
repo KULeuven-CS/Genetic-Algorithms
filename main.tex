@@ -1,4 +1,4 @@
-\documentclass[10pt,twoside]{memoir}
+\documentclass[10pt,twoside,openleft]{memoir}
 
 % Essentials
 \usepackage[utf8]{inputenc}
@@ -51,16 +51,15 @@
 \newcommand{\unanswered}{\vspace{10em}}
 
 \begin{document}
-
-% Title page
-\maketitle
-
 \frontmatter
+
+\begin{titlingpage}
+\maketitle
+\end{titlingpage}
 
 % Table of Contents
 \tableofcontents
 
-% Main Matter
 \mainmatter
 \part{Summaries}
 
@@ -118,7 +117,7 @@ or equivalent policy.
 \subfile{subfiles/preservation.tex}
 
 \chapter{Questions}
-\subfile{subfiles/questions.tex}
+\subfile{subfiles/questions.tex}g
 
 % Appendix
 \backmatter

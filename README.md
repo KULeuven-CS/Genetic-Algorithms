@@ -9,7 +9,11 @@ Genetic Algorithms
 
 Please **star** this repository if you found its content useful!
 
-This document comes as is, without any warranties. The paper size of this document is A5 to allow easy side-by-side printing.
+This document comes as is, without any warranties.
+
+### Printing
+
+The paper size of this document is A5 to allow easy side-by-side printing. The file `print.tex` arranges the pages to be printed properly. However, because this requires the compiled pdf `main.pdf`, it cannot be automatically generated here. You are required to clone the repository locally, compile `main.tex` followed by compiling `print.tex`.
 
 ## Papers
 
