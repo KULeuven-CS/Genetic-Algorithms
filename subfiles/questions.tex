@@ -19,9 +19,12 @@
     \question{Suppose you want to solve an optimization problem, for which the objective function (function to be
     maximized) is known. Why it is usually not appropriate to use the objective function as the fitness function? Give
     several reasons if possible. How can you construct a good fitness function? Give an example of such a construction
-    of a fitness function in one of the texts that we have discussed.}{\unanswered}
+    of a fitness function in one of the texts that we have discussed.}{
+    It is important that the fitness function (1) rewards the right kind of individuals and (2) can be calculated quickly.  The fitness can be approximated when the computation time is extremely high or the objective function is noisy or uncertain. Another commonly used approach is the introduction of a performance function $u(x) = f(x) - f_\text{min}$ that guarantees the performance to be positive. Because this makes values hard to distinguish (leading to reduced selection pressure and stagnation). A solution is to use $f'_\text{min}$ which is the minimal of the last generation. This approach is called scaling and is guided by a parameter called the scaling window.}
     \question{Given the charts in the article on GABIL, can you say that the tree based concept learner (ID5R)
-    outperforms the genetic algorithm? Discuss figures 1 -- 7 in detail.}{\unanswered}
+    outperforms the genetic algorithm? Discuss figures 1 -- 7 in detail.}{
+    Preliminary results from the paper support that GABIL is competitive with ID5R as the target concept increases in complexity.
+    \textbf{Figure~1} compares the two with easier concepts, with 1 or 2 disjunct concepts. Here, the predictive performance of ID5R improves more rapidly than that of GABIL. As concepts get more complex, ID5R starts to degrade in performance. For the case of 3 disjunctions, performance is comparable for  1 conjunction and 3 conjunctions (\textbf{Figure~2} and \textbf{Figure~6}. The exception is the case for 2 disjunctions in combination with 2 conjunctions in \textbf{Figure~4}, where GABIL is being outperformed. For the case of 4 disjunctions, GABIl is the winner. Because the complexity of a target concept corresponds roughly to the size of its decision tree, the authors expect GABIL to keep outperforming ID5R as the difficulty increases.}
     \question{Explain the terms ``epistasis'' and ``deception''. What is the difference?}{
     \textbf{Epistatis} indicates that there is a nonlinear interaction among the bits of the string. This means that
     the effect of one gene is being dependent on the presence of another. A search function is \textbf{deceptive} when
@@ -42,8 +45,6 @@
     \question{Handling constraints: Explain the difference between algorithms based on repair methods and algorithms
     based on decoders. Why these strategies can lead to a better performance compared with algorithms based on penalty
     functions?}{Algorithms based on repair methods correct infeasible solutions, so they never become part of the population. However, the repair process can be computationally intensive or as difficult as solving the original problem. Decoder on the other hand use a representation which guarantees to always generate a feasible solution. They too can be computationally intensive and it is not always possible to model all constraints. They are especially effective compared to penalty functions when the ration between feasible parts of the search space and the whole search space is smaller, because it is harder for the penalty function to provide feasible results.  }
-    \question{What techniques are used in order to obtain better load balance? Can these be used in other
-    applications?}{\unanswered}
     \question{Discuss some drawbacks of the roulette wheel selection mechanism, and describe some methods to avoid (or
     to minimize) these drawbacks.}{ Fitness proportionate select can cause premature convergence because outstanding
     individuals quickly take over the entire population. The dominance of a single group of highly fit individuals
