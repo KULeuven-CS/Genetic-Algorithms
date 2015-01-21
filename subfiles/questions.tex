@@ -37,10 +37,11 @@
     linear-rank selection has been used with some success, it ignores the information about fitness differences of
     different individuals and violates the schema theorem}
     \question{Discussion of the paper Evolving 3D morphology and behavior by competition by K. Sims. The fitness
-    function is different from the fitness functions we are used to. Explain how and why.}{\unanswered}
+    function is different from the fitness functions we are used to. Explain how and why.}{
+    In a natural evolutionary system, the fitness is not constant but depends on environmental factors including the evolution of other organisms. This idea distinguishes between natural evolution an optimization. Sustaining evolutionary change is obtained by having an organism's fitness determined by the behavior of the other organism in the population. More specifically, the individuals of the population competes against each other, with winner receiving a higher relative fitness score.}
     \question{Handling constraints: Explain the difference between algorithms based on repair methods and algorithms
     based on decoders. Why these strategies can lead to a better performance compared with algorithms based on penalty
-    functions? How would you take into account the constraints arising in a timetabling problem?}{\unanswered}
+    functions?}{Algorithms based on repair methods correct infeasible solutions, so they never become part of the population. However, the repair process can be computationally intensive or as difficult as solving the original problem. Decoder on the other hand use a representation which guarantees to always generate a feasible solution. They too can be computationally intensive and it is not always possible to model all constraints. They are especially effective compared to penalty functions when the ration between feasible parts of the search space and the whole search space is smaller, because it is harder for the penalty function to provide feasible results.  }
     \question{What techniques are used in order to obtain better load balance? Can these be used in other
     applications?}{\unanswered}
     \question{Discuss some drawbacks of the roulette wheel selection mechanism, and describe some methods to avoid (or
