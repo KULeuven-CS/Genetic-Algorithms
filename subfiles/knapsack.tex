@@ -41,7 +41,7 @@ The difficulty of the problem is greatly affected by the correlation between pro
 Higher correlations implies a smaller value of the difference:
 
 \begin{equation}
-\text{max}_{i=1 \mathellipsis n} { P[i]/W[i]} - \text{mim}_{i=1 \mathellipsis n} { P[i]/W[i]}
+\text{max}_{i=1 \mathellipsis n} { P[i]/W[i]} - \text{min}_{i=1 \mathellipsis n} { P[i]/W[i]}
 \end{equation}
 
 Higher correlation problems have higher expected difficulty. Two knapsacks are considered:
@@ -115,7 +115,7 @@ solution. Two build procedures are considered:
 \begin{itemize}
 	\item Penalty functions $A_p[i]$ do not produce feasible results for problems with restrictive capacity ($C_1$).
 	\item Considering average capacity ($C_2$) problems, the logarithmic penalty function outperforms all others.
-	\item Considering average capacity ($C_2$) problems, the greedy repair method $A_r[2]$ outperforms all other
+	\item Considering restrictive capacity ($C_2$) problems, the greedy repair method $A_r[2]$ outperforms all other
 	methods.
 \end{itemize}
 
