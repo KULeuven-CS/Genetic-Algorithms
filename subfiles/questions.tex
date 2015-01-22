@@ -101,8 +101,7 @@ introduce the linear variant introduced in \cite{4075583}. Here, a performance f
     u(x) = f(x) - f_\text{min}
 \end{equation}
 
-This function guarantees the performance to be positive. However, this makes values hard to distinguish, leading
-to reduced selection pressure and stagnation. A solution to this secondary problem is to use $f'_\text{min}$ which is the minimal of the last generation. This approach is called scaling and is guided by a parameter called the scaling window.
+This function guarantees the performance to be positive. It is usually possible to reduce selection pressure and stagnation more, by using $f'_\text{min}$ instead of $f_\text{min}$. $f'_\text{min}$ is the minimal fitness value observed in the last generation (or the last $n$ generations). Using this observed minimum instead of the absolute minimum makes values easier to distinguish. This approach is called scaling and is guided by a parameter called the scaling window. The only drawback is that special measures have to be taken when new offspring has a fitness value lower than $f'_\text{min}$.
 
 Three scaling modes are considered in \cite{4075583}, based on the parameter $W$.
 \begin{itemize}
