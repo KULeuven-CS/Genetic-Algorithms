@@ -67,10 +67,19 @@ Explain, chapter 4, page 69, the sentence ``Both algorithms are self-adaptive \t
 Selection and RAPGA)
 \end{question}
 \begin{solution}
-This means that both algorithms alter their selection based on the state of the current population and their offspring.
-Offspring selection does this by requiring a certain percentage of children to outperform their parents. RAPGA on the
-other hand increases and decreases the population size relative to the amount of children that both outperform their
+The extended selection concepts, OS and RAPGA, are self adaptive in the sense that they operate based on the current
+state of the population. More specifically, they introduce selection after reproduction in a way that checks whether or
+not crossover and mutation were able to produce a new solution candidate that outperforms its own parents.
+
+This is done to tackle the problem of premature converges, which occurs when the  genetic information stored in the
+individuals of a population does not contain that genetic information which would be necessary to further improve
+solution quality, resulting in such a suboptimal state that the genetic operators are no longer able to produce
+offspring that outperform their parents.
+
+Offspring selection works by requiring a certain percentage of children to outperform their parents. RAPGA on the
+other hand increases and decreases the population size, relative to the amount of children that both outperform their
 parents and contain new genetic information.
+
 \end{solution}
 
 \section{Objective Function}
