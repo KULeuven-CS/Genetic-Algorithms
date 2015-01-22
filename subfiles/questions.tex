@@ -10,13 +10,55 @@ This chapter covers qss previously used for the examination of the course.
 Explain Holland's schema theorem. Which assumptions that are made in this theorem and are somewhat unlikely?
 \end{question}
 \begin{solution}
-The schema theorem considers the canonical GA with binary string representation of individuals with an
-    alphabet $\{0,1,\#\}$ where the latter is a wild card symbol. The theorem says that the number of short schemata
-    with low order and above average quality, grows exponentially in subsequent generations of a genetic algorithm.
-    This result is obtained by considering the influence of replication, crossover and mutation. It is unlikely because
-    it is obtained under idealized conditions that do not hold for most practical GA applications. Furthermore, very
-    few problems can be modeled as the canonical GA (binary encoding, proportional selection, single-point crossover,
-    strong mutation).
+The schema theorem considers the canonical GA with binary string representation of individuals with an alphabet
+$\{0,1,\#\}$ where the latter is a wild card symbol.
+
+The \textbf{fitness} of a schema $H$ at generation (time) $t$ is the average fitness of the strings representing schema
+$H$ in the population.
+
+\begin{equation}
+\text{fitness} = f_{H}(t)
+\end{equation}
+
+The \textbf{defining length} $\delta(H)$ is the distance between the first and the last \emph{fixed} string position.
+Here is $l$ the length of the string $s$.
+
+\begin{equation}
+    \text{defining length} = \delta(H) < l
+\end{equation}
+
+The \textbf{order} of a schema $H$ is is given by the length minus the number of wild card symbols.
+
+\begin{equation}
+    \text{order} = o(H) = l - |\{ \# \in s \}|
+\end{equation}
+
+The probability of survival of schema $H$ after \emph{cross-over} (recombination) is given by the formula:
+
+\begin{equation}
+    \text{probability of survival} \geq 1 - p_c \cdot \frac{\delta(H)}{l-1}
+\end{equation}
+
+The probability of survival of schema $H$ after \emph{mutation} is given by the formula:
+
+\begin{equation}
+    \text{probability of survival} \geq (1-p_m)^{o(H)} \approx 1 - o(H)p_m
+\end{equation}
+
+The schemata theorem is given by the formula:
+
+\begin{equation}
+    m(H,t+1) \geq m(H,t) \frac{f_H(t)}{f(t)} [1 - p_c \frac{\delta(H) }{l-1} - o(H)p_m]
+\end{equation}
+
+The result essentially says that the number of short schemata with low order and above average quality grows
+exponentially in subsequent generations of a genetic algorithm. This result is obtained by considering the influence of
+replication, crossover and mutation.
+
+Still, even if the schema theorem is a very important result in GA theory, it is obtained under idealized conditions
+that do not hold for most practical GA applications. Furthermore, the theorem depends on the representation and on the
+genetic operators, more specifically on the Canonical GA. It is easy to find or to construct problems for which it is
+not verified. Such problem are called \textbf{deceptive}.
 \end{solution}
 
 \section{OS \& RAPGA}
@@ -66,7 +108,7 @@ winner. Because the complexity of a target concept corresponds roughly to the si
 expect GABIL to keep outperforming ID5R as the difficulty increases.
 \end{solution}
 
-\section{Epistasis & Deception}
+\section{Epistasis \& Deception}
 \begin{question}
 Explain the terms ``epistasis'' and ``deception''. What is the difference?
 \end{question}
