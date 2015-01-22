@@ -43,9 +43,13 @@
 \theoremstyle{definition}
 \newtheorem{ex}{Example}[subsection]
 \newtheorem{experiment}{Experiment}[subsection]
+\newtheorem*{question}{Question}
+\theoremstyle{lemma}
+\newtheorem*{solution}{Solution}
+
 
 % Question item
-\newcommand{\question}[2]{%
+\newcommand{\qs}[2]{%
     \item {\textbf{#1}} \vspace{0.5em} \\  \textit{#2}
 }
 \newcommand{\unanswered}{\vspace{10em}}

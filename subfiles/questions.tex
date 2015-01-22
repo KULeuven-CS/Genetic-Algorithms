@@ -2,72 +2,168 @@
 
 \begin{document}
 
-This chapter covers questions previously used for the examination of the course.
+This chapter covers qss previously used for the examination of the course.
 
-\begin{enumerate}
-    \question{Explain Holland's schema theorem. Which assumptions that are made in this theorem and are somewhat
-    unlikely?}{ The schema theorem considers the canonical GA with binary string representation of individuals with an
+\section{Schemata Theorem}
+
+\begin{question}
+Explain Holland's schema theorem. Which assumptions that are made in this theorem and are somewhat unlikely?
+\end{question}
+\begin{solution}
+The schema theorem considers the canonical GA with binary string representation of individuals with an
     alphabet $\{0,1,\#\}$ where the latter is a wild card symbol. The theorem says that the number of short schemata
     with low order and above average quality, grows exponentially in subsequent generations of a genetic algorithm.
     This result is obtained by considering the influence of replication, crossover and mutation. It is unlikely because
     it is obtained under idealized conditions that do not hold for most practical GA applications. Furthermore, very
     few problems can be modeled as the canonical GA (binary encoding, proportional selection, single-point crossover,
-    strong mutation). }
-    \question{Explain, chapter 4, page 69, the sentence ``Both algorithms are self-adaptive \textellipsis'' (About
-    Offspring Selection and RAPGA)}{This means that both algorithms alter their selection based on the state of the
-    current population and their offspring. Offspring selection does this by requiring a certain percentage of children
-    to outperform their parents. RAPGA on the other hand increases and decreases the population size relative to the
-    amount of children that both outperform their parents and contain new genetic information.}
-    \question{Suppose you want to solve an optimization problem, for which the objective function (function to be
-    maximized) is known. Why it is usually not appropriate to use the objective function as the fitness function? Give
-    several reasons if possible. How can you construct a good fitness function? Give an example of such a construction
-    of a fitness function in one of the texts that we have discussed.}{
-    The problem when using the regular fitness function is that at the beginning, there may be very high fitness individuals that cause bias towards them. On the other hand, near the end of a run, when population is converging, the individuals might have closely related fitness value. The solution to this problem is \textbf{scaling} of the fitness function. Different approaches exist, of which we introduce the linear variant introduced in \cite{4075583}. Here, a performance function  $u(x) = f(x) - f_\text{min}$ is introduced. This guarantees the performance to be positive. However, this makes values hard to distinguish (leading to reduced selection pressure and stagnation). A solution is to use $f'_\text{min}$ which is the minimal of the last generation. This approach is called scaling and is guided by a parameter called the scaling window.}
-    \question{Given the charts in the article on GABIL, can you say that the tree based concept learner (ID5R)
-    outperforms the genetic algorithm? Discuss figures 1 -- 7 in detail.}{
-    Preliminary results from the paper support that GABIL is competitive with ID5R as the target concept increases in complexity.
-    \textbf{Figure~1} compares the two with easier concepts, with 1 or 2 disjunct concepts. Here, the predictive performance of ID5R improves more rapidly than that of GABIL. As concepts get more complex, ID5R starts to degrade in performance. For the case of 3 disjunctions, performance is comparable for  1 conjunction and 3 conjunctions (\textbf{Figure~2} and \textbf{Figure~6}. The exception is the case for 2 disjunctions in combination with 2 conjunctions in \textbf{Figure~4}, where GABIL is being outperformed. For the case of 4 disjunctions, GABIl is the winner. Because the complexity of a target concept corresponds roughly to the size of its decision tree, the authors expect GABIL to keep outperforming ID5R as the difficulty increases.}
-    \question{Explain the terms ``epistasis'' and ``deception''. What is the difference?}{
-    \textbf{Epistatis} indicates that there is a nonlinear interaction among the bits of the string. This means that
-    the effect of one gene is being dependent on the presence of another. A search function is \textbf{deceptive} when
-    the low-order high-fitness value schemata do not contain the optimal string as an instance. An example is the
-    minimal deceptive problem, where $f(11) > f(\#\#)$ but $f(\#0) > f(\#1)$ or $f(0\#) > f(1\#)$.}
-    \question{Discussion of rank-based selection. Which parameters can be used to adapt the behavior of these methods?
-    When would you want to use a rank-based selection method?}{ In the context of linear-rank selection the individuals
-    of the population are ordered according to their fitness and copies are assigned in such a way that the best
-    individual receives a pre-determined multiple of the number of copies the worst one receives. On the one hand rank
-    selection implicitly reduces the dominating effects of ``super individuals'' in populations (i.e., individuals that
-    are assigned a significantly better fitness value than all other individuals), but on the other hand it warps the
-    difference between close fitness values, thus increasing the selection pressure in stagnant populations. Even if
-    linear-rank selection has been used with some success, it ignores the information about fitness differences of
-    different individuals and violates the schema theorem}
-    \question{Discussion of the paper Evolving 3D morphology and behavior by competition by K. Sims. The fitness
-    function is different from the fitness functions we are used to. Explain how and why.}{
-    In a natural evolutionary system, the fitness is not constant but depends on environmental factors including the evolution of other organisms. This idea distinguishes between natural evolution an optimization. Sustaining evolutionary change is obtained by having an organism's fitness determined by the behavior of the other organism in the population. More specifically, the individuals of the population competes against each other, with winner receiving a higher relative fitness score.}
-    \question{Handling constraints: Explain the difference between algorithms based on repair methods and algorithms
-    based on decoders. Why these strategies can lead to a better performance compared with algorithms based on penalty
-    functions?}{Algorithms based on repair methods correct infeasible solutions, so they never become part of the population. However, the repair process can be computationally intensive or as difficult as solving the original problem. Decoder on the other hand use a representation which guarantees to always generate a feasible solution. They too can be computationally intensive and it is not always possible to model all constraints. They are especially effective compared to penalty functions when the ration between feasible parts of the search space and the whole search space is smaller, because it is harder for the penalty function to provide feasible results.  }
-    \question{Discuss some drawbacks of the roulette wheel selection mechanism, and describe some methods to avoid (or
-    to minimize) these drawbacks.}{ Fitness proportionate select can cause premature convergence because outstanding
-    individuals quickly take over the entire population. The dominance of a single group of highly fit individuals
-    (``super individuals'') can be reduced by stochastic sampling techniques. The second drawback is caused when the
-    fitness values are close together,leading to low selection pressure. This can be mitigated by so called ``windowing
-    techniques'' to make the selection independent of the dimension of the fitness value. }
-    \question{What is evolutionary programming? Can this still be considered a genetic algorithm? Give one ore two
-    examples to illustrate the approach.}{ Genetic programming is an extension of the GA, where the population is a
-    computer programming. The same principles of selection, crossover and mutation are applied to come to a solution.
-    The most common approach represents programs as structured syntax trees. A notable difference between GP and GA is
-    that in GP, crossover and mutation (or a simple copy) are executed independently. Each time new offspring is to be
-    created, one of these variants is chosen probabilistically, as opposed to GA, where they are applied sequentially.
-    }
-    \question{Consider varying population sizes for GA's. Discuss (1) the purpose, (2) the importance of the life
-    parameter and (3) the relevant figure in the book.}{ Assuming this questions regards RAPGA and Figure~4.3 from the
-    book \cite{affenzeller2009genetic} and that the life parameter is the minimum and maximum population size. The
-    purpose of the varying population size is maintaining as much genetic diversity while making as much progress as
-    possible from the actual population. The population size requires a upper limit because the population would
-    otherwise explode in the first rounds which would be very inefficient. The lower limit is intended to maintain a
-    sufficient amount of chromosomes to outperform their parents. Reaching the lower bound can be used as an indicator
-    for convergence. Figure~3.4 shows how the population size changes between the lower and upper bound.}
-\end{enumerate}
+    strong mutation).
+\end{solution}
+
+\section{OS \& RAPGA}
+\begin{question}
+Explain, chapter 4, page 69, the sentence ``Both algorithms are self-adaptive \textellipsis'' (About Offspring
+Selection and RAPGA)
+\end{question}
+\begin{solution}
+This means that both algorithms alter their selection based on the state of the current population and their offspring.
+Offspring selection does this by requiring a certain percentage of children to outperform their parents. RAPGA on the
+other hand increases and decreases the population size relative to the amount of children that both outperform their
+parents and contain new genetic information.
+\end{solution}
+
+\section{Objective Function}
+\begin{question}
+Suppose you want to solve an optimization problem, for which the objective function (function to be maximized) is
+known. Why it is usually not appropriate to use the objective function as the fitness function? Give several reasons if
+possible. How can you construct a good fitness function? Give an example of such a construction of a fitness function
+in one of the texts that we have discussed.
+\end{question}
+\begin{solution}
+The problem when using the regular fitness function is that at the beginning, there may be very high fitness
+individuals that cause bias towards them. On the other hand, near the end of a run, when population is converging, the
+individuals might have closely related fitness value. The solution to this problem is \textbf{scaling} of the fitness
+function. Different approaches exist, of which we introduce the linear variant introduced in \cite{4075583}. Here, a
+performance function  $u(x) = f(x) - f_\text{min}$ is introduced. This guarantees the performance to be positive.
+However, this makes values hard to distinguish (leading to reduced selection pressure and stagnation). A solution is to
+use $f'_\text{min}$ which is the minimal of the last generation. This approach is called scaling and is guided by a
+parameter called the scaling window.
+\end{solution}
+
+\section{GABIL}
+\begin{question}
+Given the charts in the article on GABIL, can you say that the tree based concept learner (ID5R) outperforms the
+genetic algorithm? Discuss figures 1 -- 7 in detail.
+\end{question}
+\begin{solution}
+Preliminary results from the paper support that GABIL is competitive with ID5R as the target concept increases in
+complexity.
+\textbf{Figure~1} compares the two with easier concepts, with 1 or 2 disjunct concepts. Here, the predictive
+performance of ID5R improves more rapidly than that of GABIL. As concepts get more complex, ID5R starts to degrade in
+performance. For the case of 3 disjunctions, performance is comparable for  1 conjunction and 3 conjunctions
+(\textbf{Figure~2} and \textbf{Figure~6}. The exception is the case for 2 disjunctions in combination with 2
+conjunctions in \textbf{Figure~4}, where GABIL is being outperformed. For the case of 4 disjunctions, GABIl is the
+winner. Because the complexity of a target concept corresponds roughly to the size of its decision tree, the authors
+expect GABIL to keep outperforming ID5R as the difficulty increases.
+\end{solution}
+
+\section{Epistasis & Deception}
+\begin{question}
+Explain the terms ``epistasis'' and ``deception''. What is the difference?
+\end{question}
+\begin{solution}
+\textbf{Epistatis} indicates that there is a nonlinear interaction among the bits of the string. This means that the
+effect of one gene is being dependent on the presence of another. A search function is \textbf{deceptive} when the low-
+order high-fitness value schemata do not contain the optimal string as an instance. An example is the minimal deceptive
+problem, where $f(11) > f(\#\#)$ but $f(\#0) > f(\#1)$ or $f(0\#) > f(1\#)$.
+\end{solution}
+
+\section{Rank-Based Selection}
+\begin{question}
+Discussion of rank-based selection. Which parameters can be used to adapt the behavior of these methods? When would you
+want to use a rank-based selection method?
+\end{question}
+\begin{solution}
+In the context of linear-rank selection the individuals of the population are ordered according to their fitness and
+copies are assigned in such a way that the best individual receives a pre-determined multiple of the number of copies
+the worst one receives. On the one hand rank selection implicitly reduces the dominating effects of ``super
+individuals'' in populations (i.e., individuals that are assigned a significantly better fitness value than all other
+individuals), but on the other hand it warps the difference between close fitness values, thus increasing the selection
+pressure in stagnant populations. Even if linear-rank selection has been used with some success, it ignores the
+information about fitness differences of different individuals and violates the schema theorem
+\end{solution}
+
+\section{Evolving 3D Morphology}
+\begin{question}
+Discussion of the paper Evolving 3D morphology and behavior by competition by K. Sims. The fitness function is
+different from the fitness functions we are used to. Explain how and why.
+\end{question}
+\begin{solution}
+In a natural evolutionary system, the fitness is not constant but depends on environmental factors including the
+evolution of other organisms. This idea distinguishes between natural evolution an optimization. Sustaining
+evolutionary change is obtained by having an organism's fitness determined by the behavior of the other organism in the
+population. More specifically, the individuals of the population competes against each other, with winner receiving a
+higher relative fitness score.
+\end{solution}
+
+\section{Constraints}
+\begin{question}
+Handling constraints: Explain the difference between algorithms based on repair methods and algorithms based on
+decoders. Why these strategies can lead to a better performance compared with algorithms based on penalty functions?
+\end{question}
+\begin{solution}
+Algorithms based on repair methods correct infeasible solutions, so they never become part of the population. However,
+the repair process can be computationally intensive or as difficult as solving the original problem. Decoder on the
+other hand use a representation which guarantees to always generate a feasible solution. They too can be
+computationally intensive and it is not always possible to model all constraints. They are especially effective
+compared to penalty functions when the ration between feasible parts of the search space and the whole search space is
+smaller, because it is harder for the penalty function to provide feasible results.
+\end{solution}
+
+\section{Roulette Wheel Selection}
+\begin{question}
+Discuss some drawbacks of the roulette wheel selection mechanism, and describe some methods to avoid (or to minimize)
+these drawbacks.
+\end{question}
+\begin{solution}
+Fitness proportionate select can cause premature convergence because outstanding individuals quickly take over the
+entire population. The dominance of a single group of highly fit individuals (``super individuals'') can be reduced by
+stochastic sampling techniques. The second drawback is caused when the fitness values are close together,leading to low
+selection pressure. This can be mitigated by so called ``windowing techniques'' to make the selection independent of
+the dimension of the fitness value.
+\end{solution}
+
+\section{Genetic Programming}
+\begin{question}
+What is evolutionary programming? Can this still be considered a genetic algorithm? Give one ore two examples to
+illustrate the approach.
+\end{question}
+\begin{solution}
+Genetic programming is an extension of the GA, where the population is a computer programming. The same principles of
+selection, crossover and mutation are applied to come to a solution. The most common approach represents programs as
+structured syntax trees. A notable difference between GP and GA is that in GP, crossover and mutation (or a simple
+copy) are executed independently. Each time new offspring is to be created, one of these variants is chosen
+probabilistically, as opposed to GA, where they are applied sequentially.
+\end{solution}
+
+\section{Varying Population Size}
+\begin{question}
+Consider varying population sizes for GA's. Discuss (1) the purpose, (2) the importance of the life parameter and (3)
+the relevant figure in the book.
+\end{question}
+\begin{solution}
+Assuming this qss regards RAPGA and Figure~4.3 from the
+book \cite{affenzeller2009genetic} and that the life parameter is the minimum and maximum population size. The
+purpose of the varying population size is maintaining as much genetic diversity while making as much progress as
+possible from the actual population. The population size requires a upper limit because the population would
+otherwise explode in the first rounds which would be very inefficient. The lower limit is intended to maintain a
+sufficient amount of chromosomes to outperform their parents. Reaching the lower bound can be used as an indicator
+for convergence. Figure~3.4 shows how the population size changes between the lower and upper bound.
+\end{solution}
 
 \end{document}
+
+% \section{}
+% \begin{question}
+% \end{question}
+% \begin{solution}
+% \end{solution}
