@@ -117,4 +117,16 @@ performance can be obtained with a range of GA control parameter settings. An al
 of GA's would be to enable the GA to modify its own parameters dynamically
 during the search.
 
+\section{TLDR;}
+GA can be used to search for optimal parameters for optimization problems. In particular a metalevel GA can be used to select optimal GAs (with optimal parameter settings) from a space of available GAs. 
+
+Using standard operators and representation, few GAs perform better than SGA. Parameter settings that were shown to be beneficial : 
+\begin{itemize}
+\item Mutation rate should generally be higher than 0\% but lower than 5\%.
+\item Optimal crossover rate depends on the population size, lower for large population.
+\item A small scaling window almost always helps.
+\item Elitism should be present.
+\item A large generation gap is shown to be optimal.
+\end{itemize}
+
 \end{document}
