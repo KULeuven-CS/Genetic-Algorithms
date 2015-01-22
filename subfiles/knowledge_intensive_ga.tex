@@ -27,9 +27,9 @@ With a growing amount of information, knowledge-extraction capabilities have bec
 understand the world. Machine learning is an attempt to solve this problem. There are two main groups of approaches:
 
 \begin{itemize}
-	\item \textbf{Non-Symbolic:} Non-symbolic, inductive learning systems, also called subsymbolic, do not acquire
-	explicit knowledge but gather other information necessary for the descriptive model. An example are
-	\emph{statistical models}. All non-symbolic appraoches process low-level entities (usually numerical parameters).
+	\item \textbf{Non-Symbolic:} Non-symbolic, inductive learning systems, also called sub-symbolic, do not acquire
+	explicit knowledge but gather other information necessary for the descriptive model. Examples are
+	\emph{statistical models}. All non-symbolic approaches process low-level entities (usually numerical parameters).
 	\item \textbf{Symbolic:}  Symbolic systems produce knowledge in a high-level descriptive language. Mechanisms based
 	on symbol manipulation, in addition to being closely related to their objectives, allow for the use of the same
 	input and output language.
@@ -83,7 +83,7 @@ as benchmarks, both of which are full-memory systems.
 	positive against the negative events. This approach conceptually follows the ideas of inductive methodology, since
 	the generated knowledge is either generalized or specialized.
 	\item \textbf{Quinlan's  ID} \\
-	With AD, training examples are represented by feature vectors similar to events in $VL_1$.  The algorithm
+	With ID, training examples are represented by feature vectors similar to events in $VL_1$.  The algorithm
 	constructs a decision tree, where each leaf is associated with a single decision class and each internal node
 	corresponds to an attribute while each node's branches correspond to a value of that attribute.
 \end{itemize}
@@ -94,7 +94,7 @@ traditional fixed-length representation is unsuitable. Two different approaches 
 
 \begin{itemize}
 	\item \textbf{Michigan Approach} \\
-	the population still consists of fixed-length elements, but the solution is represented by a set of chromosomes
+	The population still consists of fixed-length elements, but the solution is represented by a set of chromosomes
 	from the population.
 	\item \textbf{Pittsburgh Approach} \\
 	Here, variable-length chromosomes are used to represent proposed solutions individually. For supervised learning,
@@ -250,7 +250,6 @@ probabilities server to fire operators for structures of their type and have a d
 	conditions) that are incomplete, and are decreased for those that are inconsistent.
 	\item Probabilities of specializing operators are increased for applications to structures that are inconsistent,
 	and decreased for those that are incomplete.
-	\item
 \end{itemize}
 
 These two measures server as an additional heuristic to the fitness. The new value $p'$ is the adjusted probability,

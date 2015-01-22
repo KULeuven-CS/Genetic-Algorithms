@@ -60,7 +60,7 @@ The following practical aspects of the RAPGA need to be considered:
 \begin{itemize}
     \item The algorithm should offer different parent selection mechanisms, even for different parents (male and female) or allow for it to be disabled completely (random).
     \item It is reasonable to have more than one crossover and mutation operator. This works even for operators only generating a good result sporadically, because only successful chromosomes are considered in the evolutionary progress.
-    \item The population size requires a lower and upper bound. The upper limit is required to prevent snowballing in the first rounds. The lower limit is needed to have a sufficient amount of chromosomes present to outperform parents, and it can act as a detector for convergence.
+    \item The population size requires a lower and upper bound. The upper limit is required to prevent snowballing in the first rounds. The lower limit is needed to have a sufficient amount of chromosomes present to outperform parents. Additionally, it can act as a detector for convergence.
     \item Checking genotipical identity prevents structurally identical individuals to be included in the next generation.
     \item The maximum effort per generation is the maximum number of newly generated chromosomes per generation, no matter whether they are accepted or not. This can be used to terminate generation rounds.
 \end{itemize}

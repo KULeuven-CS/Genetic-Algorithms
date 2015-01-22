@@ -24,14 +24,15 @@ strategies emerge.
 \section{Introduction}
 
 Interactions between evolving organisms are generally believed to have a strong influence on their resulting complexity
-and diversity. The difference between evolution and optimization is the lack of an explicit goal. The hope is that
-virtual creatures with higher complexity and more interesting behavior will evolve than when applying the selection
-pressures of optimization alone.
+and diversity. Here, the fitness function is determined The difference between evolution and optimization is the lack
+of an explicit goal. Here, the fitness of an individual is dependent on the behavior of the others in the population.
+The hope is that virtual creatures with higher complexity and more interesting behavior will evolve, more than when
+applying the selection pressures of optimization alone.
 
 \section{The Contest}
 
 Creatures compete to gain control of a single cube, placed in the center of the world. Creates start rotated away from
-the cube and under a diagonal plane. This prevent large creates from simply falling over the cube. The fitness is
+the cube and under a diagonal plain. This prevent large creates from simply falling over the cube. The fitness is
 determined by the distance from the cube. Additionally, keeping the opponent further away from the cube increases one's
 fitness. Finally, control over the cube is awarded: if both creatures end up contacting the cube, the winner is the one
 that surrounds it the most.
